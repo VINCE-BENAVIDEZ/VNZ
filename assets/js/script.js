@@ -3,7 +3,22 @@
    Edit the PROJECTS array and CONFIG values below to customize.
    The contact form uses mailto: and does not require a backend.
    ========================================================= */
+  const startDate = new Date("2022-07-28T00:00:00+08:00");
 
+  function updateCounter() {
+    const now = new Date();
+    let diff = Math.floor((now - startDate) / 1000);
+
+    const days = Math.floor(diff / 86400);
+    const hrs = Math.floor((diff % 86400) / 3600);
+    const min = Math.floor((diff % 3600) / 60);
+    const sec = diff % 60;
+
+    document.getElementById("elapsed").textContent =
+      `${days} Days, ${hrs} Hrs, ${min} Min, ${sec} Sec`;
+  }
+  updateCounter();
+  setInterval(updateCounter, 1000);
 const CONFIG = {
   name: "Vince Benavidez",
   email: "hello@example.com", // Replace with your real email.
@@ -15,13 +30,13 @@ const CONFIG = {
 const PROJECTS = [
   {
     id: "pet-identify",
-    title: "Pet Identify",
+    title: "PET-IDENTIFYPH",
     category: "Web Development",
-    description: "A digital pet identification concept connecting physical identity with useful online pet information.",
+    description: "A digital pet identification system connecting physical identity with useful online pet information.",
     tags: ["HTML", "CSS", "JavaScript", "Google Maps"],
-    glyph: "✳", art: "art-web",
+    glyph: "{ }", art: "art-web",
     details: "A platform concept designed to help pet owners maintain accessible identification records and support the safe return of lost pets. Expand this note with your role, process, technical architecture, and measurable outcomes.",
-    link: "https://example.com"
+    link: "https://vince-benavidez.github.io/PETIFY-PH"
   },
   {
     id: "link-safety",
@@ -29,37 +44,37 @@ const PROJECTS = [
     category: "Computer Research",
     description: "A proposed browser extension concept for identifying suspicious links and helping prevent online threats.",
     tags: ["Cybersecurity", "Browser Extension", "Research"],
-    glyph: "⌁", art: "art-research",
+    glyph: "🔒", art: "art-research",
     details: "A research project exploring practical, lightweight methods for detecting phishing links, malicious redirects, and deceptive URLs. Add your methodology, evaluation, findings, and research document.",
     link: "https://example.com"
   },
   {
-    id: "creative-automation",
-    title: "Creative Automation Lab",
-    category: "Programming",
+    id: "A.I-automation",
+    title: "A.I Automation Lab",
+    category: "A.i",
     description: "Small experiments that turn repetitive digital workflows into simple, reusable tools.",
     tags: ["JavaScript", "Automation", "APIs"],
-    glyph: "{ }", art: "art-code",
+    glyph: "A.I", art: "art-code",
     details: "A collection of programming experiments focused on useful automation, API integrations, and thoughtful interfaces. Replace this placeholder with a specific tool or repository.",
     link: "https://github.com/"
   },
   {
-    id: "ai-interface",
-    title: "Human × AI Interface",
+    id: "sapsappy",
+    title: "Sapsappy",
     category: "Artificial Intelligence",
-    description: "An exploration of calm, human-centered interfaces for interacting with intelligent systems.",
+    description: "A poetry created for the soul purpose of expressing suppressed emotions and feelings of a individual.",
     tags: ["AI", "UX", "Prototyping"],
-    glyph: "◎", art: "art-ai",
+    glyph: "🪶", art: "art-ai",
     details: "A conceptual exploration of how AI features can be integrated into everyday interfaces without overwhelming the user. Describe the model or API used if you build a working implementation.",
     link: "https://example.com"
   },
   {
     id: "visual-studies",
-    title: "Visual Studies",
-    category: "Digital Art",
+    title: "Binsyongie-App",
+    category: "App Development",
     description: "A growing collection of visual experiments with form, color, typography, and digital composition.",
-    tags: ["Digital Art", "Composition", "Design"],
-    glyph: "◌", art: "art-art",
+    tags: ["Design", "Development", "Programming"],
+    glyph: "📱", art: "art-art",
     details: "A personal visual playground for experimenting with digital composition, visual language, and creative direction. Replace this with images and captions for your selected artworks.",
     link: "https://example.com"
   },

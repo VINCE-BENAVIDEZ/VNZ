@@ -1,0 +1,15 @@
+/* Brand-fit refinement for the portfolio wordmark and hero monogram. */
+.brand{gap:10px;white-space:nowrap}
+.brand-mark{flex:0 0 34px}
+
+/* V.R.U.A. is an extended monogram, so its type scale follows the badge. */
+.core{width:140x;height:140px}
+.core>span{max-width:calc(100% - 22px);font-size:clamp(24px,2.25vw,50px);letter-spacing:-.075em;white-space:nowrap}
+.core small{font-size:7px;line-height:1.45;margin-top:7px}
+
+@media(max-width:680px){
+  .brand{gap:8px;font-size:7px;letter-spacing:.1em}
+  .core{width:138px;height:138px}
+  .core>span{max-width:calc(100% - 18px);font-size:24px}
+  .core small{font-size:5.5px;letter-spacing:.13em}
+}
