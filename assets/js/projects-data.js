@@ -16,8 +16,7 @@
     title: "My Project Title",
     type: "Web Development",          // the filter buttons are created from these values
     objective: "What the project is meant to achieve.",
-    date: "March 2026",
-    thanks: "People or teams you want to thank",
+
     description: [                    // each line is one paragraph
       "First paragraph about the project.",
       "Second paragraph (optional)."
@@ -32,6 +31,9 @@
       poster: "assets/img/demo.jpg"   //   "image"   -> use  src: "assets/img/shot.png"
     }
   },
+    date: "March 2026",
+    thanks: "People or teams you want to thank",
+
 
    MEDIA EXAMPLES:
      media: { type: "image",   src: "assets/img/shot.png", alt: "Screenshot of the app" }
@@ -40,100 +42,121 @@
    ========================================================= */
 
 const PROJECT_ENTRIES = [
+
+
+//---------------------------------------------------------THIS IS ONE PROJECT -----------------------------------
   {
     id: "pet-identify",
     title: "PET-IDENTIFYPH",
     type: "Web Development",
     objective: "Help pet owners keep accessible identification records and support the safe return of lost pets.",
-    date: "2026",
-    thanks: "Add the people who helped you here",
     description: [
-      "A digital pet identification system connecting physical identity with useful online pet information.",
-      "A platform concept designed to help pet owners maintain accessible identification records and support the safe return of lost pets."
+      "A Platform concept designed to help pet owners maintain accessible identification records and support the safe return of lost pets.",
+      "MISSION: To give every pet a permanent identity and every family peace of mind. Petidentify connects pets to their essential physical and digital information, making it accessible when it matters most—helping families protect, identify, and care for the pets they love.",
+      "VISION: A world where every pet has a permanent identity, every family can stay connected, and no beloved pet is ever truly lost. They are not just pets. They are part of our family."
     ],
     tags: ["HTML", "CSS", "JavaScript", "Google Maps"],
     link: "https://vince-benavidez.github.io/PETIFY-PH",
     glyph: "{ }",
-    art: "art-web"
-  },
+    art: "art-web",
+    media: {                        
+      type: "image",               
+      src: "assets/img/projects/petifyph.png", 
+      poster: "assets/img/projects/petifyph.png" 
+    },
+    date: "June 17,2026",
+    thanks: "Sapsappy",
+  }
+  //---------------------------------------------------------THIS END OF ONE PROJECT -------------------------------
+  , //dont forget this comma if you are adding more projects after this
+  //---------------------------------------------------------THIS IS ONE PROJECT -----------------------------------
   {
     id: "link-safety",
-    title: "Web Link Safety Assurance",
-    type: "Computer Research",
-    objective: "Explore practical, lightweight ways to spot suspicious links and prevent online threats.",
-    date: "2026",
-    thanks: "Add the people who helped you here",
+    title: "WEB LINK SAFETY ASSURANCE: A PROPOSED BROWSER EXTENSION FOR THREAT DETECTION AND PREVENTION",
+    type: "Security Research",
+    objective: "Detect malicious websites and suspicious links in real time, Block harmful websites and files to protect users, Identify potential online threats and prevent malware attacks, Provide browser-based security without installing antivirus software.",
     description: [
       "A proposed browser extension concept for identifying suspicious links and helping prevent online threats.",
-      "A research project exploring practical, lightweight methods for detecting phishing links, malicious redirects, and deceptive URLs."
+      "My name is Vince Benavidez, and I am one of the researchers behind the thesis project entitled “WEB LINK SAFETY ASSURANCE: A PROPOSED BROWSER EXTENSION FOR THREAT DETECTION AND PREVENTION.”",
+      "Our project aims to enhance online security by detecting and preventing threats from malicious websites and files directly through a browser extension, eliminating the need to install additional third-party antivirus software.",
+      "We are proud to introduce what we believe to be a pioneering browser-based cybersecurity initiative in the Philippines, with potential global significance. We are also pursuing copyright protection to safeguard our research and technological innovations.",
+      "Based on our current testing, the system has achieved a 99% detection rate against known malicious websites and files in our test dataset, leveraging threat intelligence comparable to that of approximately 70 antivirus vendors worldwide—all without requiring users to install separate antivirus applications.",
     ],
-    tags: ["Cybersecurity", "Browser Extension", "Research"],
+    tags: ["HTML", "CSS", "JavaScript", "Browser Extensions", "Virus Total Api"],
     link: "https://example.com",
     glyph: "🔒",
-    art: "art-research"
-  },
+    media: {                        
+      type: "image",               
+      src: "assets/img/projects/link-safety.png", 
+      poster: "assets/img/projects/link-safety.png" 
+    },
+    date: "2024",
+    thanks: "RESEARCHERS:   Herc Bandiola,  Vince Benavidez, Emmanuel Lozanes, Ariel Gamal, Christian Jay Padua"
+  }
+  //---------------------------------------------------------THIS END OF ONE PROJECT -------------------------------
+  , //dont forget this comma if you are adding more projects after this
+  //---------------------------------------------------------THIS IS ONE PROJECT -----------------------------------
   {
     id: "ai-automation",
-    title: "A.I Automation Lab",
+    title: "V.R.U.A",
     type: "Artificial Intelligence",
-    objective: "Turn repetitive digital workflows into simple, reusable tools.",
-    date: "2026",
-    thanks: "Add the people who helped you here",
+    objective: "Run, automate, schedule, and manage digital tasks for efficiency and productivity.",
     description: [
-      "Small experiments that turn repetitive digital workflows into simple, reusable tools.",
+      "V.R.U.A is an intelligent AI agent that automates, schedules, executes, and manages digital tasks to maximize productivity, efficiency, and workflow optimization.",
       "A collection of programming experiments focused on useful automation, API integrations, and thoughtful interfaces."
     ],
-    tags: ["JavaScript", "Automation", "APIs"],
+    tags: ["JavaScript", "AI Automation", "APIs", "Selenium WebDriver", "Python", "Node.js", "Web Scraping", "Java", "C++","C#"],
     link: "https://github.com/",
-    glyph: "A.I",
-    art: "art-code"
-  },
-  {
-    id: "sapsappy",
-    title: "Sapsappy",
-    type: "Artificial Intelligence",
-    objective: "Give people a place to express suppressed emotions and feelings through poetry.",
-    date: "July 2022",
-    thanks: "Add the people who helped you here",
-    description: [
-      "A poetry created for the soul purpose of expressing suppressed emotions and feelings of a individual.",
-      "A conceptual exploration of how AI features can be integrated into everyday interfaces without overwhelming the user."
-    ],
-    tags: ["AI", "UX", "Prototyping"],
-    link: "https://example.com",
-    glyph: "🪶",
-    art: "art-ai"
-  },
+    glyph: "V.R.U.A",
+    art: "art-code",
+    date: "March 7, 2022",
+    thanks: "Sapsappy",
+  }
+  //---------------------------------------------------------THIS END OF ONE PROJECT -------------------------------
+   , //dont forget this comma if you are adding more projects after this
+  //---------------------------------------------------------THIS IS ONE PROJECT -----------------------------------
   {
     id: "binsyongie-app",
     title: "Binsyongie-App",
     type: "App Development",
-    objective: "Experiment with digital composition, visual language, and creative direction in an app.",
-    date: "2026",
-    thanks: "Add the people who helped you here",
+    objective: "Simplify and optimize my portfolio website by improving its design, enhancing usability, and ensuring full offline functionality for seamless accessibility.",
     description: [
-      "A growing collection of visual experiments with form, color, typography, and digital composition.",
-      "A personal visual playground for experimenting with digital composition, visual language, and creative direction."
+      "Hi, I’m Vince Benavidez, the developer of the BINSYONGIE App. This application was developed with the primary goal of providing convenient, accessible, and seamless access to my personal portfolio website on any mobile device.",
+      "The app allows users to explore my personal information, background, skills, projects, and achievements without the need to manually open a web browser or navigate through multiple applications. It serves as a more direct and user-friendly way to access my portfolio anytime and anywhere.",
+      "In addition, I created this application to make it easier for me to visit and access the various tools and interactive features I developed and embedded within my portfolio website. Instead of searching for individual tools or navigating through different pages, I can conveniently access everything in one centralized application.",
+      "Ultimately, BINSYONGIE App aims to improve accessibility, simplify navigation, and provide a more efficient mobile experience. It brings my portfolio and personally developed web tools together in one place, making them easier to access, explore, and use whenever needed."
     ],
     tags: ["Design", "Development", "Programming"],
-    link: "https://example.com",
+    link: "#",
     glyph: "📱",
-    art: "art-art"
-  },
-  {
-    id: "cardistry-motion",
-    title: "Cardistry / Motion Studies",
-    type: "Cardistry",
-    objective: "Practice flow, rhythm, precision, and expressive movement with playing cards.",
-    date: "2026",
-    thanks: "Add the people who helped you here",
-    description: [
-      "A visual practice exploring flow, rhythm, precision, and expressive movement with playing cards.",
-      "A record of cardistry practice, original flourishes, performance clips, and experiments in movement."
-    ],
-    tags: ["Cardistry", "Flourishes", "Performance"],
-    link: "https://example.com",
-    glyph: "♠",
-    art: "art-cards"
+    art: "art-art",
+    date: "March 27, 2024",
+    thanks: "Sapsappy"
   }
+  //---------------------------------------------------------THIS END OF ONE PROJECT -------------------------------
+   , //dont forget this comma if you are adding more projects after this
+  //---------------------------------------------------------THIS IS ONE PROJECT -----------------------------------
+  {
+    id: "binsyongie-app",
+    title: "Binsyongie-App",
+    type: "Hardware Development",
+    objective: "Simplify and optimize my portfolio website by improving its design, enhancing usability, and ensuring full offline functionality for seamless accessibility.",
+    description: [
+      "Hi, I’m Vince Benavidez, the developer of the BINSYONGIE App. This application was developed with the primary goal of providing convenient, accessible, and seamless access to my personal portfolio website on any mobile device.",
+      "The app allows users to explore my personal information, background, skills, projects, and achievements without the need to manually open a web browser or navigate through multiple applications. It serves as a more direct and user-friendly way to access my portfolio anytime and anywhere.",
+      "In addition, I created this application to make it easier for me to visit and access the various tools and interactive features I developed and embedded within my portfolio website. Instead of searching for individual tools or navigating through different pages, I can conveniently access everything in one centralized application.",
+      "Ultimately, BINSYONGIE App aims to improve accessibility, simplify navigation, and provide a more efficient mobile experience. It brings my portfolio and personally developed web tools together in one place, making them easier to access, explore, and use whenever needed."
+    ],
+    tags: ["Design", "Development", "Programming"],
+    link: "#",
+    glyph: "📱",
+    art: "art-art",
+    date: "March 27, 2024",
+    thanks: "Sapsappy"
+  }
+  //---------------------------------------------------------THIS END OF ONE PROJECT -------------------------------
+
+  
+  
+  // END OF PROJECT LIST
 ];

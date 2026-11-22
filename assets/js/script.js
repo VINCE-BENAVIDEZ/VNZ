@@ -37,7 +37,7 @@ const PROJECTS = [
     tags: ["HTML", "CSS", "JavaScript", "Google Maps"],
     glyph: "{ }", art: "art-web",
     details: "A platform concept designed to help pet owners maintain accessible identification records and support the safe return of lost pets. Expand this note with your role, process, technical architecture, and measurable outcomes.",
-    link: "https://vince-benavidez.github.io/PETIFY-PH"
+    link: "projects.html"
   },
   {
     id: "link-safety",
@@ -51,13 +51,13 @@ const PROJECTS = [
   },
   {
     id: "A.I-automation",
-    title: "A.I Automation Lab",
+    title: "A.I",
     category: "A.i",
     description: "Small experiments that turn repetitive digital workflows into simple, reusable tools.",
     tags: ["JavaScript", "Automation", "APIs"],
     glyph: "A.I", art: "art-code",
     details: "A collection of programming experiments focused on useful automation, API integrations, and thoughtful interfaces. Replace this placeholder with a specific tool or repository.",
-    link: "https://github.com/"
+    link: "/github.com/"
   },
   {
     id: "sapsappy",
