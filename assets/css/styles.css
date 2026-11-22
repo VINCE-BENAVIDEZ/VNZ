@@ -649,6 +649,82 @@ h1 {
   padding: 5px 7px;
   border-radius: 2px;
 }
+/* ---------- View all projects button + empty filter state ---------- */
+.project-empty {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: 60px 20px;
+  text-align: center;
+  font-size: 9px;
+  color: #697183;
+  border: 1px dashed var(--line);
+  border-radius: 5px;
+}
+.view-all-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  gap: 16px;
+  width: 100%;
+  margin-top: 17px;
+  padding: 19px 24px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: linear-gradient(90deg, rgba(130, 148, 255, 0.08), rgba(130, 148, 255, 0.02) 60%, transparent);
+  color: #dce2ff;
+  font: 500 11px var(--mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: opacity 0.7s ease, transform 0.7s ease, background 0.25s, color 0.25s, border-color 0.25s;
+}
+.view-all-btn svg {
+  position: absolute;
+  right: 24px;
+  top: 50%;
+  margin-top: -8px;
+  width: 16px;
+  height: 16px;
+  flex: none;
+  transition: transform 0.25s;
+}
+.view-all-btn:hover,
+.view-all-btn:focus-visible {
+  background: #dfe5ff;
+  color: #10131d;
+  border-color: #dfe5ff;
+  outline: none;
+}
+.view-all-btn:hover svg,
+.view-all-btn:focus-visible svg {
+  transform: translate(3px, -3px);
+}
+.modal-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px 20px;
+  margin-top: 19px;
+}
+.modal-actions .text-link {
+  margin-top: 0;
+}
+.view-all-btn.modal-view-btn {
+  width: auto;
+  margin: 0 0 0 auto;
+  padding: 13px 44px 13px 20px;
+  font-size: 10px;
+  white-space: nowrap;
+}
+.view-all-btn.modal-view-btn svg {
+  right: 16px;
+  width: 14px;
+  height: 14px;
+  margin-top: -7px;
+}
 .projects-foot {
   display: flex;
   align-items: center;
@@ -1406,6 +1482,16 @@ h1 {
     linear-gradient(to right, transparent 0, #000 16%, #000 84%, transparent 100%);
   mask-composite: intersect;
   filter: saturate(0.88) contrast(1.05) brightness(0.92);
+}
+/* Keep the modal's X visible on short screens: only the text column scrolls (mobile keeps its own sticky X) */
+@media (min-width: 681px) {
+  .modal-card {
+    overflow: hidden;
+  }
+  .modal-content {
+    max-height: 90vh;
+    overflow-y: auto;
+  }
 }
 @media (prefers-reduced-motion: reduce) {
   *,

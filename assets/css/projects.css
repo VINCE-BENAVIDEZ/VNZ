@@ -1,0 +1,279 @@
+/* =========================================================
+   PROJECTS PAGE — styles
+   Uses the same tokens (colors, fonts, spacing) as styles.css.
+   ========================================================= */
+
+/* ---------- page intro ---------- */
+.page-hero {
+  padding-top: 150px;
+  padding-bottom: 8px;
+}
+.page-title-row {
+  margin-top: 30px;
+  margin-bottom: 26px;
+}
+.page-title {
+  font-size: clamp(36px, 4.4vw, 60px);
+  line-height: 1.12;
+  letter-spacing: -0.06em;
+  font-weight: 600;
+  margin: 0;
+}
+.page-count {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 9px;
+  color: #7f8aa0;
+  margin-bottom: 26px;
+}
+.page-count #projectCount {
+  color: #dce2ff;
+}
+
+/* ---------- project entry (media + details on the left, description on the right) ---------- */
+.project-list {
+  margin-top: 18px;
+}
+.project-entry {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+  gap: clamp(32px, 6vw, 84px);
+  padding: 64px 0;
+  border-top: 1px solid var(--line);
+  scroll-margin-top: 90px;
+}
+.project-entry:last-child {
+  border-bottom: 1px solid var(--line);
+}
+
+/* media box — rounded frame like the layout sketch */
+.entry-media {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  border: 1px solid rgba(181, 195, 255, 0.24);
+  border-radius: 20px;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 10px;
+  background: #111827;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.38), inset 0 0 40px rgba(124, 145, 255, 0.06);
+}
+.entry-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, transparent 55%, rgba(8, 10, 15, 0.4));
+}
+.entry-media.playing::after {
+  display: none;
+}
+.entry-media > img,
+.media-player {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: 0;
+  background: #05070b;
+}
+.media-player {
+  z-index: 4;
+}
+.media-index {
+  position: absolute;
+  top: 16px;
+  left: 18px;
+  z-index: 2;
+  font-size: 8px;
+  color: rgba(235, 240, 255, 0.65);
+}
+.media-glyph {
+  position: relative;
+  z-index: 1;
+  font-size: clamp(48px, 6vw, 82px);
+  font-weight: 600;
+  letter-spacing: -0.1em;
+  line-height: 1;
+  color: rgba(231, 236, 255, 0.82);
+  text-shadow: 0 0 40px rgba(149, 168, 255, 0.4);
+}
+.media-caption {
+  position: relative;
+  z-index: 1;
+  font-size: 9px;
+  color: #8f9cbb;
+}
+.play-btn {
+  position: absolute;
+  z-index: 3;
+  left: 50%;
+  bottom: 22px;
+  width: 58px;
+  height: 58px;
+  margin-left: -29px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 1px solid rgba(181, 195, 255, 0.45);
+  border-radius: 50%;
+  background: rgba(13, 16, 24, 0.7);
+  backdrop-filter: blur(8px);
+  color: #dfe5ff;
+  cursor: pointer;
+  transition: background 0.25s, color 0.25s, border-color 0.25s, transform 0.25s;
+}
+.entry-media.has-media .play-btn {
+  bottom: auto;
+  top: 50%;
+  margin-top: -29px;
+}
+.play-btn svg {
+  width: 22px;
+  height: 22px;
+  margin-left: 3px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linejoin: round;
+}
+.play-btn:hover,
+.play-btn:focus-visible {
+  background: #dfe5ff;
+  color: #10131d;
+  border-color: #dfe5ff;
+  transform: scale(1.06);
+  outline: none;
+}
+
+/* details list: TITLE / TYPE / OBJECTIVE / DATE CREATED / THANKS TO */
+.entry-meta {
+  margin: 30px 0 0;
+  border-top: 1px solid var(--line);
+}
+.meta-row {
+  display: grid;
+  grid-template-columns: 128px 1fr;
+  gap: 18px;
+  align-items: baseline;
+  padding: 13px 0;
+  border-bottom: 1px solid var(--line);
+}
+.meta-row dt {
+  font: 9px var(--mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #8d98ad;
+}
+.meta-row dt::after {
+  content: ":";
+}
+.meta-row dd {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.7;
+  color: #c3cadb;
+}
+.meta-title dd {
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 1.3;
+  color: var(--text);
+}
+
+/* description column */
+.entry-right {
+  padding-top: 6px;
+}
+.entry-label {
+  font-size: 9px;
+  color: #9ca9c5;
+  margin-bottom: 22px;
+}
+.entry-label::after {
+  content: ":";
+}
+.entry-desc p {
+  font-size: 15px;
+  line-height: 1.95;
+  color: #a6adbb;
+  margin-bottom: 18px;
+}
+.entry-tags {
+  margin-top: 26px;
+}
+.view-all-btn.entry-view-btn {
+  width: auto;
+  display: inline-flex;
+  margin-top: 30px;
+  padding: 15px 56px 15px 24px;
+  font-size: 10px;
+}
+.view-all-btn.entry-view-btn svg {
+  right: 20px;
+}
+
+/* back-to-home button at the bottom */
+.projects-end {
+  padding-top: 40px;
+  padding-bottom: 90px;
+}
+.projects-end .projects-foot {
+  margin-top: 0;
+}
+.page-back-btn {
+  margin-top: 26px;
+}
+
+/* ---------- responsive ---------- */
+@media (max-width: 900px) {
+  .project-entry {
+    grid-template-columns: 1fr;
+    gap: 34px;
+    padding: 48px 0;
+  }
+  .page-hero {
+    padding-top: 140px;
+  }
+}
+@media (max-width: 680px) {
+  .page-hero {
+    padding-top: 120px;
+  }
+  .page-title {
+    font-size: clamp(36px, 11vw, 50px);
+  }
+  .page-count {
+    font-size: 7px;
+  }
+  .entry-media {
+    border-radius: 16px;
+  }
+  .play-btn {
+    width: 50px;
+    height: 50px;
+    margin-left: -25px;
+    bottom: 16px;
+  }
+  .entry-media.has-media .play-btn {
+    margin-top: -25px;
+  }
+  .meta-row {
+    grid-template-columns: 96px 1fr;
+    gap: 12px;
+  }
+  .meta-title dd {
+    font-size: 18px;
+  }
+  .entry-desc p {
+    font-size: 13px;
+  }
+  .projects-end {
+    padding-bottom: 60px;
+  }
+}

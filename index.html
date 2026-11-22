@@ -94,6 +94,7 @@
         <button class="filter-btn" data-filter="Cardistry">Cardistry</button>
       </div>
       <div class="project-grid" id="projectGrid"></div>
+      <button class="view-all-btn reveal" id="viewAllProjects" type="button"><span>View all projects</span><i data-lucide="arrow-up-right"></i></button>
       <div class="projects-foot reveal"><span class="mono">MORE EXPERIMENTS ARE ALWAYS IN PROGRESS</span><span class="tiny-cross">✳</span></div>
     </section>
 
@@ -133,7 +134,7 @@
     <article class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
       <button class="modal-close" data-close-modal aria-label="Close project"><i data-lucide="x"></i></button>
       <div class="modal-art" id="modalArt"></div>
-      <div class="modal-content"><div class="section-kicker mono" id="modalCategory"></div><h2 id="modalTitle"></h2><p id="modalDescription"></p><div class="tag-list" id="modalTags"></div><div class="modal-detail"><span class="mono">PROJECT NOTE</span><p id="modalDetails"></p></div><a class="text-link" id="modalLink" href="#" target="_blank" rel="noreferrer">Project Link<i data-lucide="arrow-up-right"></i></a></div>
+      <div class="modal-content"><div class="section-kicker mono" id="modalCategory"></div><h2 id="modalTitle"></h2><p id="modalDescription"></p><div class="tag-list" id="modalTags"></div><div class="modal-detail"><span class="mono">PROJECT NOTE</span><p id="modalDetails"></p></div><div class="modal-actions"><a class="text-link" id="modalLink" href="#" target="_blank" rel="noreferrer">Project Link<i data-lucide="arrow-up-right"></i></a><a class="view-all-btn modal-view-btn" id="modalViewBtn" href="#" target="_blank" rel="noreferrer"><span>View project</span><i data-lucide="arrow-up-right"></i></a></div></div>
     </article>
   </div>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>

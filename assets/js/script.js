@@ -23,7 +23,8 @@ const CONFIG = {
   name: "Vince Benavidez",
   email: "hello@example.com", // Replace with your real email.
   github: "https://github.com/", // Replace with your profile.
-  linkedin: "https://www.linkedin.com/" // Replace with your profile.
+  linkedin: "https://www.linkedin.com/", // Replace with your profile.
+  allProjectsUrl: "projects.html" // Page opened by the "View all projects" button. Use "" to just reset the filter instead; a full https:// link opens in a new tab.
 };
 
 // Add, remove, or edit projects here. Each card opens a detail modal.
@@ -95,8 +96,24 @@ const filters = document.querySelector("#projectFilters");
 const modal = document.querySelector("#projectModal");
 const toast = document.querySelector("#toast");
 
+// Match a filter against a project's category or tags (ignores case/punctuation; "A.i" = "AI").
+function normalizeKey(value) {
+  const key = String(value).toLowerCase().replace(/[^a-z]/g, "");
+  return key === "artificialintelligence" ? "ai" : key;
+}
+
+function matchesFilter(project, filter) {
+  if (filter === "All") return true;
+  const key = normalizeKey(filter);
+  return normalizeKey(project.category) === key || project.tags.some(tag => normalizeKey(tag) === key);
+}
+
 function renderProjects(filter = "All") {
-  const visible = PROJECTS.filter(project => filter === "All" || project.category === filter);
+  const visible = PROJECTS.filter(project => matchesFilter(project, filter));
+  if (!visible.length) {
+    projectGrid.innerHTML = `<p class="project-empty mono">NOTHING HERE YET — NEW WORK IN THIS CATEGORY IS COMING SOON.</p>`;
+    return;
+  }
   projectGrid.innerHTML = visible.map((project, index) => `
     <article class="project-card" tabindex="0" role="button" aria-label="View ${escapeHTML(project.title)} project" data-project="${escapeHTML(project.id)}">
       <div class="project-art ${escapeHTML(project.art)}">
@@ -119,9 +136,12 @@ function escapeHTML(value) {
   })[char]);
 }
 
+let lastFocused = null;
+
 function openProject(id) {
   const project = PROJECTS.find(item => item.id === id);
   if (!project) return;
+  lastFocused = document.activeElement;
   document.querySelector("#modalArt").className = `modal-art ${project.art}`;
   document.querySelector("#modalArt").innerHTML = `<span>${escapeHTML(project.glyph)}</span>`;
   document.querySelector("#modalCategory").textContent = `PROJECT / ${project.category.toUpperCase()}`;
@@ -131,7 +151,8 @@ function openProject(id) {
   document.querySelector("#modalTags").innerHTML = project.tags.map(tag => `<span>${escapeHTML(tag)}</span>`).join("");
   const link = document.querySelector("#modalLink");
   link.href = project.link || "#";
-  link.style.display = project.link ? "inline-flex" : "none";
+  document.querySelector("#modalViewBtn").href = project.link || "#";
+  document.querySelector(".modal-actions").style.display = project.link ? "flex" : "none";
   modal.classList.add("open");
   modal.setAttribute("aria-hidden", "false");
   document.body.classList.add("modal-open");
@@ -142,6 +163,8 @@ function closeProject() {
   modal.classList.remove("open");
   modal.setAttribute("aria-hidden", "true");
   document.body.classList.remove("modal-open");
+  if (lastFocused && typeof lastFocused.focus === "function") lastFocused.focus({ preventScroll: true });
+  lastFocused = null;
 }
 
 filters.addEventListener("click", event => {
@@ -149,6 +172,19 @@ filters.addEventListener("click", event => {
   if (!button) return;
   filters.querySelectorAll(".filter-btn").forEach(item => item.classList.toggle("active", item === button));
   renderProjects(button.dataset.filter);
+});
+
+document.querySelector("#viewAllProjects").addEventListener("click", () => {
+  if (CONFIG.allProjectsUrl) {
+    if (/^https?:/i.test(CONFIG.allProjectsUrl)) window.open(CONFIG.allProjectsUrl, "_blank", "noopener");
+    else window.location.href = CONFIG.allProjectsUrl;
+    return;
+  }
+  const allButton = filters.querySelector('[data-filter="All"]');
+  filters.querySelectorAll(".filter-btn").forEach(item => item.classList.toggle("active", item === allButton));
+  renderProjects("All");
+  filters.scrollIntoView({ behavior: "smooth", block: "start" });
+  showToast(`Showing all ${PROJECTS.length} projects.`);
 });
 
 projectGrid.addEventListener("click", event => {
@@ -162,7 +198,8 @@ projectGrid.addEventListener("keydown", event => {
   }
 });
 modal.addEventListener("click", event => {
-  if (event.target.matches("[data-close-modal]")) closeProject();
+  // closest() so clicking the X icon (the <svg> inside the button) also closes the modal
+  if (event.target.closest("[data-close-modal]")) closeProject();
 });
 document.addEventListener("keydown", event => {
   if (event.key === "Escape" && modal.classList.contains("open")) closeProject();
