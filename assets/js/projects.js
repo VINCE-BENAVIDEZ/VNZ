@@ -20,25 +20,27 @@ function renderMedia(project, number) {
   const media = project.media;
   const label = `<span class="media-index mono">PROJECT / ${number}</span>`;
 
+  // Photo: shown whole, fitted inside the frame
   if (media && media.type === "image" && media.src) {
     return `<div class="entry-media has-media">${label}<img src="${escapeHTML(media.src)}" alt="${escapeHTML(media.alt || project.title)}" loading="lazy" decoding="async"></div>`;
   }
 
+  // Video: the player itself fills the frame (no placeholder/preview card)
   const isVideo = media && (media.type === "video" || media.type === "youtube");
-  const playBtn = isVideo
-    ? `<button class="play-btn" type="button" aria-label="Play video: ${escapeHTML(project.title)}">${PLAY_ICON}</button>`
-    : "";
-  const poster = isVideo && media.poster
-    ? `<img class="media-poster" src="${escapeHTML(media.poster)}" alt="" loading="lazy" decoding="async">`
-    : "";
-  const placeholder = poster ? "" : `
-      <span class="media-glyph">${escapeHTML(project.glyph || "✳")}</span>
-      <span class="media-caption mono">${isVideo ? "PROJECT VIDEO" : "PROJECT VIDEO / IMG."}</span>`;
-  const data = isVideo
-    ? ` data-media-type="${escapeHTML(media.type)}" data-src="${escapeHTML(media.src || media.id || "")}" data-poster="${escapeHTML(media.poster || "")}"`
-    : "";
+  if (isVideo) {
+    const resolved = resolveMedia(media.type, media.src || media.id);
+    if (resolved) {
+      const player = resolved.type === "iframe"
+        ? `<iframe class="media-player" src="${escapeHTML(resolved.src)}" title="${escapeHTML(project.title)} video" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen loading="lazy" referrerpolicy="no-referrer"></iframe>`
+        : `<video class="media-player" src="${escapeHTML(resolved.src)}" controls playsinline preload="metadata"${media.poster ? ` poster="${escapeHTML(media.poster)}"` : ""}></video>`;
+      return `<div class="entry-media has-media">${label}${player}</div>`;
+    }
+  }
 
-  return `<div class="entry-media ${escapeHTML(project.art || "art-web")}${poster ? " has-media" : ""}"${data}>${label}${poster}${placeholder}${playBtn}</div>`;
+  // No media at all: keep the glyph placeholder
+  return `<div class="entry-media ${escapeHTML(project.art || "art-web")}">${label}
+      <span class="media-glyph">${escapeHTML(project.glyph || "✳")}</span>
+      <span class="media-caption mono">PROJECT VIDEO / IMG.</span></div>`;
 }
 
 /* ---------- one project entry ---------- */
@@ -118,13 +120,13 @@ function resolveMedia(kind, rawSrc) {
 
   // YouTube (full URL, short URL, embed URL)
   const yt = src.match(/(?:youtube\.com\/(?:watch\?(?:[^#]*&)?v=|embed\/|shorts\/)|youtu\.be\/)([\w-]{11})/);
-  if (yt) return { type: "iframe", src: `https://www.youtube-nocookie.com/embed/${yt[1]}?autoplay=1&rel=0` };
+  if (yt) return { type: "iframe", src: `https://www.youtube-nocookie.com/embed/${yt[1]}?rel=0` };
   if (kind === "youtube" && /^[\w-]{11}$/.test(src))
-    return { type: "iframe", src: `https://www.youtube-nocookie.com/embed/${src}?autoplay=1&rel=0` };
+    return { type: "iframe", src: `https://www.youtube-nocookie.com/embed/${src}?rel=0` };
 
   // Vimeo
   const vimeo = src.match(/vimeo\.com\/(?:video\/)?(\d+)/);
-  if (vimeo) return { type: "iframe", src: `https://player.vimeo.com/video/${vimeo[1]}?autoplay=1` };
+  if (vimeo) return { type: "iframe", src: `https://player.vimeo.com/video/${vimeo[1]}` };
 
   // Direct video file
   if (/\.(mp4|webm|ogg|mov|m4v)(\?.*)?$/i.test(src)) return { type: "video", src };
@@ -135,36 +137,6 @@ function resolveMedia(kind, rawSrc) {
   // Relative path without extension info: try as a video file
   return { type: "video", src };
 }
-
-listEl.addEventListener("click", event => {
-  const playButton = event.target.closest(".play-btn");
-  if (!playButton) return;
-  const box = playButton.closest(".entry-media");
-  const resolved = resolveMedia(box.dataset.mediaType, box.dataset.src);
-  if (!resolved) return;
-
-  let player;
-  if (resolved.type === "iframe") {
-    player = document.createElement("iframe");
-    player.src = resolved.src;
-    player.title = "Project video";
-    player.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
-    player.allowFullscreen = true;
-    player.referrerPolicy = "no-referrer";
-    player.loading = "lazy";
-  } else {
-    player = document.createElement("video");
-    player.src = resolved.src;
-    player.controls = true;
-    player.autoplay = true;
-    player.playsInline = true;
-    if (box.dataset.poster) player.poster = box.dataset.poster;
-  }
-  player.className = "media-player";
-  box.classList.add("playing");
-  playButton.remove();
-  box.appendChild(player);
-});
 
 /* ---------- shared site behavior (same as index.html) ---------- */
 const menuToggle = document.querySelector("#menuToggle");
