@@ -71,19 +71,26 @@
 .entry-media.playing::after {
   display: none;
 }
-.entry-media > img,
-.media-player {
-  position: center;
+.entry-media > img {
+  position: absolute;
   inset: 0;
-  width: 95%;
-  height: 95%;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   border: 0;
-  border-radius: 16px;
+  border-radius: 0;
   background: #05070b;
 }
 .media-player {
+  position: absolute;
+  inset: 0;
   z-index: 4;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  border-radius: 0;
+  background: #05070b;
+  object-fit: contain; /* <video> only; ignored by iframes */
 }
 .media-index {
   position: absolute;

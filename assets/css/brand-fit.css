@@ -3,7 +3,7 @@
 .brand-mark{flex:0 0 34px}
 
 /* V.R.U.A. is an extended monogram, so its type scale follows the badge. */
-.core{width:140x;height:140px}
+.core{width:140px;height:140px}
 .core>span{max-width:calc(100% - 22px);font-size:clamp(24px,2.25vw,50px);letter-spacing:-.075em;white-space:nowrap}
 .core small{font-size:7px;line-height:1.45;margin-top:7px}
 

@@ -100,25 +100,61 @@ filtersEl.addEventListener("click", event => {
   renderEntries(button.dataset.filter);
 });
 
-/* ---------- play video / youtube inside the media box ---------- */
+/* ---------- play video / youtube / google drive inside the media box ---------- */
+/* Turns any pasted link into something the browser can actually play.
+   - Google Drive share/preview links  -> Drive embed iframe
+   - YouTube links or plain video IDs  -> YouTube embed iframe
+   - Vimeo links                       -> Vimeo embed iframe
+   - Direct files (.mp4 .webm .ogg .mov) -> native <video>
+   - Any other https link              -> generic iframe                     */
+function resolveMedia(kind, rawSrc) {
+  const src = String(rawSrc || "").trim();
+  if (!src) return null;
+
+  // Google Drive: .../file/d/FILE_ID/view | /preview | open?id=FILE_ID | uc?id=FILE_ID
+  const drive = src.match(/drive\.google\.com\/file\/d\/([\w-]+)/) ||
+                src.match(/drive\.google\.com\/(?:open|uc)\?(?:[^#]*&)?id=([\w-]+)/);
+  if (drive) return { type: "iframe", src: `https://drive.google.com/file/d/${drive[1]}/preview` };
+
+  // YouTube (full URL, short URL, embed URL)
+  const yt = src.match(/(?:youtube\.com\/(?:watch\?(?:[^#]*&)?v=|embed\/|shorts\/)|youtu\.be\/)([\w-]{11})/);
+  if (yt) return { type: "iframe", src: `https://www.youtube-nocookie.com/embed/${yt[1]}?autoplay=1&rel=0` };
+  if (kind === "youtube" && /^[\w-]{11}$/.test(src))
+    return { type: "iframe", src: `https://www.youtube-nocookie.com/embed/${src}?autoplay=1&rel=0` };
+
+  // Vimeo
+  const vimeo = src.match(/vimeo\.com\/(?:video\/)?(\d+)/);
+  if (vimeo) return { type: "iframe", src: `https://player.vimeo.com/video/${vimeo[1]}?autoplay=1` };
+
+  // Direct video file
+  if (/\.(mp4|webm|ogg|mov|m4v)(\?.*)?$/i.test(src)) return { type: "video", src };
+
+  // Anything else that is a web page: embed it
+  if (/^https?:\/\//i.test(src)) return { type: "iframe", src };
+
+  // Relative path without extension info: try as a video file
+  return { type: "video", src };
+}
+
 listEl.addEventListener("click", event => {
   const playButton = event.target.closest(".play-btn");
   if (!playButton) return;
   const box = playButton.closest(".entry-media");
-  const kind = box.dataset.mediaType;
-  const src = box.dataset.src;
-  if (!src) return;
+  const resolved = resolveMedia(box.dataset.mediaType, box.dataset.src);
+  if (!resolved) return;
 
   let player;
-  if (kind === "youtube") {
+  if (resolved.type === "iframe") {
     player = document.createElement("iframe");
-    player.src = `https://www.youtube-nocookie.com/embed/${encodeURIComponent(src)}?autoplay=1&rel=0`;
+    player.src = resolved.src;
     player.title = "Project video";
     player.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
     player.allowFullscreen = true;
+    player.referrerPolicy = "no-referrer";
+    player.loading = "lazy";
   } else {
     player = document.createElement("video");
-    player.src = src;
+    player.src = resolved.src;
     player.controls = true;
     player.autoplay = true;
     player.playsInline = true;
@@ -126,6 +162,7 @@ listEl.addEventListener("click", event => {
   }
   player.className = "media-player";
   box.classList.add("playing");
+  playButton.remove();
   box.appendChild(player);
 });
 

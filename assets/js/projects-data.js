@@ -130,6 +130,11 @@ const PROJECT_ENTRIES = [
     link: "#",
     glyph: "📱",
     art: "art-art",
+    media: {
+    type: "video",
+    src: "https://drive.google.com/file/d/1MDcRofmrM2Lk4XFz7Jm9PcjyE-5bpHch/preview",
+    poster: ""
+    },
     date: "March 27, 2024",
     thanks: "Sapsappy"
   }
@@ -137,7 +142,7 @@ const PROJECT_ENTRIES = [
    , //dont forget this comma if you are adding more projects after this
   //---------------------------------------------------------THIS IS ONE PROJECT -----------------------------------
   {
-    id: "binsyongie-app",
+    id: "binsyongie-app-hardware",
     title: "Binsyongie-App",
     type: "Hardware Development",
     objective: "Simplify and optimize my portfolio website by improving its design, enhancing usability, and ensuring full offline functionality for seamless accessibility.",
