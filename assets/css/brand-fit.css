@@ -13,3 +13,6 @@
   .core>span{max-width:calc(100% - 18px);font-size:24px}
   .core small{font-size:5.5px;letter-spacing:.13em}
 }
+
+/* Home page modal: let the action buttons wrap on narrow cards. */
+.modal-actions{flex-wrap:wrap;gap:14px}

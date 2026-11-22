@@ -129,7 +129,7 @@ const PROJECT_ENTRIES = [
     tags: ["Design", "Development", "Programming"],
     link: "#",
     glyph: "📱",
-    art: "art-art",
+    art: "art-digital",
     media: {
     type: "video",
     src: "https://drive.google.com/file/d/1MDcRofmrM2Lk4XFz7Jm9PcjyE-5bpHch/preview",
@@ -160,8 +160,57 @@ const PROJECT_ENTRIES = [
     thanks: "Sapsappy"
   }
   //---------------------------------------------------------THIS END OF ONE PROJECT -------------------------------
+   , //dont forget this comma if you are adding more projects after this
+  //---------------------------------------------------------THIS IS ONE PROJECT -----------------------------------
+  {
+    id: "Cardiuno",
+    title: "Cardiuno",
+    type: "Hardware Development",
+    objective: "To design and build an Arduino-powered car that develops skills in programming, electronics, robotics, automation, and obstacle detection through hands-on learning.",
+    description: [
+      "A Carduino is a compact, Arduino-based robotic vehicle designed to perform various movements and automated tasks. It is capable of moving forward and backward, turning in different directions, and navigating its surroundings through obstacle detection and line-following sensors.",
+      "Carduino projects can be controlled remotely using Bluetooth or Wi-Fi, or programmed to operate autonomously.",
+      "These projects provide a practical and engaging way for students to develop their knowledge and skills in electronics, programming, and robotics.",
+      "Through hands-on experimentation, learners gain a better understanding of automation, sensor integration, and the fundamental principles behind intelligent vehicles and modern robotic systems."
+    ],
+    tags: ["Hardware Development", "Arduino", "Electronics", "Robotics", "Programming"],
+    link: "#",
+    glyph: "🤖",
+    art: "art-web",
+    media: {
+    type: "video",
+    src: "https://drive.google.com/file/d/1cyPzyO-dkIBg-8LVGVT8q8GR2mbenxEK/preview?1&amp;vq=hd1080",
+    poster: ""
+    },
+    date: "January 15, 2024",
+    thanks: "Sapsappy"
+  }
+  //---------------------------------------------------------THIS END OF ONE PROJECT -------------------------------
+   , //dont forget this comma if you are adding more projects after this
+  //---------------------------------------------------------THIS IS ONE PROJECT -----------------------------------
+  {
+    id: "Capive-Portal",
+    title: "PHISHING CAPTIVE PORTAL",
+    type: "Security Research",
+    objective: "Explore credential security using the ESP8266, understanding wireless authentication, network vulnerabilities, and ethical methods for identifying and preventing unauthorized access.",
+    description: [
+      "This project involves developing an ESP-based captive portal that mimics the login page of a legitimate website to demonstrate potential cybersecurity threats in public Wi-Fi networks.",
+      "Unlike traditional captive portals, this setup can capture users' login credentials and monitor internet traffic while they are connected to the access point.",
+      "If modified or misused by malicious actors, the system could facilitate several cyberattacks, including Man-in-the-Middle (MITM) attacks, Evil Twin attacks, and phishing attempts, potentially compromising users' personal information and online security.",
+    ],
+    tags: ["Hardware Development", "Arduino", "Electronics", "Robotics", "Programming", "Security Research"],
+    link: "#",
+    glyph: "🤖",
+    art: "art-electronics",
+    media: {
+    type: "video",
+    src: "https://drive.google.com/file/d/1jI4LU4sidd-GtklTm5RvtTNw8bXm9aT8/preview?1&amp;vq=hd1080",
+    poster: ""
+    },
+    date: "May 21, 2024",
+    thanks: "Sapsappy"
+  }
+  //---------------------------------------------------------THIS END OF ONE PROJECT -------------------------------
 
-  
-  
   // END OF PROJECT LIST
 ];

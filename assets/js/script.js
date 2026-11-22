@@ -27,104 +27,133 @@ const CONFIG = {
   allProjectsUrl: "projects.html" // Page opened by the "View all projects" button. Use "" to just reset the filter instead; a full https:// link opens in a new tab.
 };
 
-// Add, remove, or edit projects here. Each card opens a detail modal.
-const PROJECTS = [
-  {
-    id: "pet-identify",
-    title: "PET-IDENTIFYPH",
-    category: "Web Development",
-    description: "A digital pet identification system connecting physical identity with useful online pet information.",
-    tags: ["HTML", "CSS", "JavaScript", "Google Maps"],
-    glyph: "{ }", art: "art-web",
-    details: "A platform concept designed to help pet owners maintain accessible identification records and support the safe return of lost pets. Expand this note with your role, process, technical architecture, and measurable outcomes.",
-    link: "projects.html"
-  },
-  {
-    id: "link-safety",
-    title: "Web Link Safety Assurance",
-    category: "Computer Research",
-    description: "A proposed browser extension concept for identifying suspicious links and helping prevent online threats.",
-    tags: ["Cybersecurity", "Browser Extension", "Research"],
-    glyph: "🔒", art: "art-research",
-    details: "A research project exploring practical, lightweight methods for detecting phishing links, malicious redirects, and deceptive URLs. Add your methodology, evaluation, findings, and research document.",
-    link: "https://example.com"
-  },
-  {
-    id: "A.I-automation",
-    title: "A.I",
-    category: "A.i",
-    description: "Small experiments that turn repetitive digital workflows into simple, reusable tools.",
-    tags: ["JavaScript", "Automation", "APIs"],
-    glyph: "A.I", art: "art-code",
-    details: "A collection of programming experiments focused on useful automation, API integrations, and thoughtful interfaces. Replace this placeholder with a specific tool or repository.",
-    link: "/github.com/"
-  },
-  {
-    id: "sapsappy",
-    title: "Sapsappy",
-    category: "Artificial Intelligence",
-    description: "A poetry created for the soul purpose of expressing suppressed emotions and feelings of a individual.",
-    tags: ["AI", "UX", "Prototyping"],
-    glyph: "🪶", art: "art-ai",
-    details: "A conceptual exploration of how AI features can be integrated into everyday interfaces without overwhelming the user. Describe the model or API used if you build a working implementation.",
-    link: "https://example.com"
-  },
-  {
-    id: "visual-studies",
-    title: "Binsyongie-App",
-    category: "App Development",
-    description: "A growing collection of visual experiments with form, color, typography, and digital composition.",
-    tags: ["Design", "Development", "Programming"],
-    glyph: "📱", art: "art-art",
-    details: "A personal visual playground for experimenting with digital composition, visual language, and creative direction. Replace this with images and captions for your selected artworks.",
-    link: "https://example.com"
-  },
-  {
-    id: "cardistry-motion",
-    title: "Cardistry / Motion Studies",
-    category: "Cardistry",
-    description: "A visual practice exploring flow, rhythm, precision, and expressive movement with playing cards.",
-    tags: ["Cardistry", "Flourishes", "Performance"],
-    glyph: "♠", art: "art-cards",
-    details: "A record of cardistry practice, original flourishes, performance clips, and experiments in movement. Add embedded video links, photographs, and the names of your routines.",
-    link: "https://example.com"
+// Projects come from assets/js/projects-data.js (PROJECT_ENTRIES) so the home page
+// and projects.html always show the same data. Edit projects THERE, not here.
+const PROJECT_PREVIEW_COUNT = 6; // random projects shown on the home page (reshuffled on every page load)
+function shuffled(list) {
+  const copy = [...list];
+  for (let i = copy.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
   }
-];
+  return copy;
+}
+const TYPE_ART = {
+  "web development": "art-web", "security research": "art-research", "computer research": "art-research",
+  "artificial intelligence": "art-ai", "app development": "art-art", "hardware development": "art-code",
+  "art": "art-art", "cardistry": "art-cards", "programming": "art-code"
+};
+const PROJECTS = (typeof PROJECT_ENTRIES !== "undefined" ? PROJECT_ENTRIES : []).map((entry, index) => {
+  const paragraphs = Array.isArray(entry.description) ? entry.description : [entry.description];
+  const hasLink = entry.link && entry.link.trim() && entry.link.trim() !== "#";
+  return {
+    id: entry.id,
+    number: String(index + 1).padStart(2, "0"),
+    title: entry.title,
+    category: entry.type,
+    description: paragraphs.filter(Boolean)[0] || "",
+    tags: entry.tags || [],
+    glyph: entry.glyph || "✳",
+    art: entry.art || TYPE_ART[String(entry.type).toLowerCase()] || "art-web",
+    details: entry.objective || "",                    // shown as PROJECT NOTE
+    link: hasLink ? entry.link : "",                   // "Project Link" -> the real project
+    pageUrl: `projects.html#${encodeURIComponent(entry.id)}` // "View project" -> projects.html#id
+  };
+});
+
+// Credentials come from assets/js/credentials-data.js (CREDENTIAL_ENTRIES).
+const CREDENTIAL_PREVIEW_COUNT = 3; // random credentials shown on the home page (reshuffled on every page load)
+const CREDENTIALS = (typeof CREDENTIAL_ENTRIES !== "undefined" ? CREDENTIAL_ENTRIES : []).map((entry, index) => {
+  const paragraphs = Array.isArray(entry.description) ? entry.description : [entry.description];
+  const hasLink = entry.link && entry.link.trim() && entry.link.trim() !== "#";
+  return {
+    id: entry.id,
+    number: String(index + 1).padStart(2, "0"),
+    title: entry.title,
+    category: entry.type,
+    description: paragraphs.filter(Boolean)[0] || "",
+    tags: entry.tags || [],
+    glyph: entry.glyph || "🎓",
+    art: entry.art || "art-ai",
+    details: [entry.issuer && `Issued by ${entry.issuer}`, entry.date, entry.credentialId && `ID: ${entry.credentialId}`].filter(Boolean).join(" · "),
+    link: hasLink ? entry.link : "",
+    pageUrl: `credential.html#${encodeURIComponent(entry.id)}`
+  };
+});
+
+const PROJECTS_RANDOM = shuffled(PROJECTS);
+
+function shorten(text, max = 130) {
+  const clean = String(text).replace(/\s+/g, " ").trim();
+  return clean.length > max ? clean.slice(0, max).replace(/\s+\S*$/, "") + "…" : clean;
+}
 
 const projectGrid = document.querySelector("#projectGrid");
 const filters = document.querySelector("#projectFilters");
 const modal = document.querySelector("#projectModal");
 const toast = document.querySelector("#toast");
 
-// Match a filter against a project's category or tags (ignores case/punctuation; "A.i" = "AI").
-function normalizeKey(value) {
-  const key = String(value).toLowerCase().replace(/[^a-z]/g, "");
-  return key === "artificialintelligence" ? "ai" : key;
+function matchesFilter(project, filter) {
+  return filter === "All" || project.category === filter;
 }
 
-function matchesFilter(project, filter) {
-  if (filter === "All") return true;
-  const key = normalizeKey(filter);
-  return normalizeKey(project.category) === key || project.tags.some(tag => normalizeKey(tag) === key);
+function renderFilters() {
+  const types = [...new Set(PROJECTS.map(project => project.category).filter(Boolean))];
+  filters.innerHTML =
+    `<button class="filter-btn active" data-filter="All">All <span>${String(PROJECTS.length).padStart(2, "0")}</span></button>` +
+    types.map(type => `<button class="filter-btn" data-filter="${escapeHTML(type)}">${escapeHTML(type)}</button>`).join("");
 }
 
 function renderProjects(filter = "All") {
-  const visible = PROJECTS.filter(project => matchesFilter(project, filter));
+  const visible = PROJECTS_RANDOM.filter(project => matchesFilter(project, filter)).slice(0, PROJECT_PREVIEW_COUNT);
   if (!visible.length) {
     projectGrid.innerHTML = `<p class="project-empty mono">NOTHING HERE YET — NEW WORK IN THIS CATEGORY IS COMING SOON.</p>`;
     return;
   }
-  projectGrid.innerHTML = visible.map((project, index) => `
+  projectGrid.innerHTML = visible.map(project => `
     <article class="project-card" tabindex="0" role="button" aria-label="View ${escapeHTML(project.title)} project" data-project="${escapeHTML(project.id)}">
       <div class="project-art ${escapeHTML(project.art)}">
-        <span class="art-index">PROJECT / ${String(index + 1).padStart(2, "0")}</span>
+        <span class="art-index">PROJECT / ${project.number}</span>
         <span class="art-glyph">${escapeHTML(project.glyph)}</span>
       </div>
       <div class="project-card-body">
         <div class="project-card-top"><span class="project-category">${escapeHTML(project.category)}</span><i data-lucide="arrow-up-right"></i></div>
         <h3>${escapeHTML(project.title)}</h3>
-        <p>${escapeHTML(project.description)}</p>
+        <p>${escapeHTML(shorten(project.description))}</p>
         <div class="project-tags">${project.tags.slice(0, 3).map(tag => `<span>${escapeHTML(tag)}</span>`).join("")}</div>
+      </div>
+    </article>`).join("");
+  if (window.lucide) lucide.createIcons();
+}
+
+const CREDENTIALS_RANDOM = shuffled(CREDENTIALS);
+const credentialGrid = document.querySelector("#credentialGrid");
+const credentialFilters = document.querySelector("#credentialFilters");
+
+function renderCredentialFilters() {
+  const types = [...new Set(CREDENTIALS.map(item => item.category).filter(Boolean))];
+  credentialFilters.innerHTML =
+    `<button class="filter-btn active" data-filter="All">All <span>${String(CREDENTIALS.length).padStart(2, "0")}</span></button>` +
+    types.map(type => `<button class="filter-btn" data-filter="${escapeHTML(type)}">${escapeHTML(type)}</button>`).join("");
+}
+
+function renderCredentials(filter = "All") {
+  const visible = CREDENTIALS_RANDOM.filter(item => matchesFilter(item, filter)).slice(0, CREDENTIAL_PREVIEW_COUNT);
+  if (!visible.length) {
+    credentialGrid.innerHTML = `<p class="project-empty mono">NOTHING HERE YET — NEW CREDENTIALS ARE COMING SOON.</p>`;
+    return;
+  }
+  credentialGrid.innerHTML = visible.map(item => `
+    <article class="project-card" tabindex="0" role="button" aria-label="View ${escapeHTML(item.title)} credential" data-credential="${escapeHTML(item.id)}">
+      <div class="project-art ${escapeHTML(item.art)}">
+        <span class="art-index">CREDENTIAL / ${item.number}</span>
+        <span class="art-glyph">${escapeHTML(item.glyph)}</span>
+      </div>
+      <div class="project-card-body">
+        <div class="project-card-top"><span class="project-category">${escapeHTML(item.category)}</span><i data-lucide="arrow-up-right"></i></div>
+        <h3>${escapeHTML(item.title)}</h3>
+        <p>${escapeHTML(shorten(item.description))}</p>
+        <div class="project-tags">${item.tags.slice(0, 3).map(tag => `<span>${escapeHTML(tag)}</span>`).join("")}</div>
       </div>
     </article>`).join("");
   if (window.lucide) lucide.createIcons();
@@ -138,21 +167,27 @@ function escapeHTML(value) {
 
 let lastFocused = null;
 
-function openProject(id) {
-  const project = PROJECTS.find(item => item.id === id);
+function openProject(id, kind = "project") {
+  const isCredential = kind === "credential";
+  const project = (isCredential ? CREDENTIALS : PROJECTS).find(item => item.id === id);
   if (!project) return;
+  document.querySelector("#modalNoteLabel").textContent = isCredential ? "CREDENTIAL NOTE" : "PROJECT NOTE";
+  document.querySelector("#modalLinkText").textContent = isCredential ? "Verify credential" : "Project Link";
+  document.querySelector("#modalViewText").textContent = isCredential ? "View credential" : "View project";
   lastFocused = document.activeElement;
   document.querySelector("#modalArt").className = `modal-art ${project.art}`;
   document.querySelector("#modalArt").innerHTML = `<span>${escapeHTML(project.glyph)}</span>`;
-  document.querySelector("#modalCategory").textContent = `PROJECT / ${project.category.toUpperCase()}`;
+  document.querySelector("#modalCategory").textContent = `${isCredential ? "CREDENTIAL" : "PROJECT"} / ${project.category.toUpperCase()}`;
   document.querySelector("#modalTitle").textContent = project.title;
   document.querySelector("#modalDescription").textContent = project.description;
   document.querySelector("#modalDetails").textContent = project.details;
   document.querySelector("#modalTags").innerHTML = project.tags.map(tag => `<span>${escapeHTML(tag)}</span>`).join("");
+  // Project Link -> the real project (hidden when the project has no link yet)
   const link = document.querySelector("#modalLink");
-  link.href = project.link || "#";
-  document.querySelector("#modalViewBtn").href = project.link || "#";
-  document.querySelector(".modal-actions").style.display = project.link ? "flex" : "none";
+  link.style.display = project.link ? "" : "none";
+  if (project.link) link.href = project.link;
+  // View project -> its entry on projects.html
+  document.querySelector("#modalViewBtn").href = project.pageUrl;
   modal.classList.add("open");
   modal.setAttribute("aria-hidden", "false");
   document.body.classList.add("modal-open");
@@ -167,6 +202,24 @@ function closeProject() {
   lastFocused = null;
 }
 
+renderFilters();
+renderCredentialFilters();
+credentialFilters.addEventListener("click", event => {
+  const button = event.target.closest("[data-filter]");
+  if (!button) return;
+  credentialFilters.querySelectorAll(".filter-btn").forEach(item => item.classList.toggle("active", item === button));
+  renderCredentials(button.dataset.filter);
+});
+credentialGrid.addEventListener("click", event => {
+  const card = event.target.closest("[data-credential]");
+  if (card) openProject(card.dataset.credential, "credential");
+});
+credentialGrid.addEventListener("keydown", event => {
+  if ((event.key === "Enter" || event.key === " ") && event.target.matches("[data-credential]")) {
+    event.preventDefault();
+    openProject(event.target.dataset.credential, "credential");
+  }
+});
 filters.addEventListener("click", event => {
   const button = event.target.closest("[data-filter]");
   if (!button) return;
@@ -314,4 +367,5 @@ function showToast(message) {
 
 document.querySelector("#year").textContent = new Date().getFullYear();
 renderProjects();
+renderCredentials();
 if (window.lucide) lucide.createIcons();

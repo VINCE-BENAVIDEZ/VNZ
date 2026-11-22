@@ -84,15 +84,7 @@
     <section class="projects section-shell section-pad" id="projects">
       <div class="section-topline reveal"><div class="section-kicker mono">02 / SELECTED WORK</div><span class="mono subtle">A WORK IN PROGRESS — 2026</span></div>
       <div class="section-title-row reveal"><h2>Projects / Research / Arts<span class="muted"></span></h2><p>A selection of projects, experiments, and explorations. Ideas Made Tangible</p></div>
-      <div class="filters reveal" id="projectFilters" aria-label="Filter projects">
-        <button class="filter-btn active" data-filter="All">All <span>06</span></button>
-        <button class="filter-btn" data-filter="Web Development">Web development</button>
-        <button class="filter-btn" data-filter="Programming">Programming</button>
-        <button class="filter-btn" data-filter="Artificial Intelligence">AI</button>
-        <button class="filter-btn" data-filter="Computer Research">Research</button>
-        <button class="filter-btn" data-filter="Art">art</button>
-        <button class="filter-btn" data-filter="Cardistry">Cardistry</button>
-      </div>
+      <div class="filters reveal" id="projectFilters" aria-label="Filter projects"></div>
       <div class="project-grid" id="projectGrid"></div>
       <button class="view-all-btn reveal" id="viewAllProjects" type="button"><span>View all projects</span><i data-lucide="arrow-up-right"></i></button>
       <div class="projects-foot reveal"><span class="mono">MORE EXPERIMENTS ARE ALWAYS IN PROGRESS</span><span class="tiny-cross">✳</span></div>
@@ -108,8 +100,16 @@
         <article class="discipline-item reveal"><div class="discipline-index mono">04</div><div class="discipline-main"><h3>Computer Research</h3><p>Investigating computer science, emerging technologies, AI, and how systems evolve.</p><div class="tag-list"><span>Computer science</span><span>AI</span><span>Research</span></div></div><div class="discipline-symbol research-symbol"><i data-lucide="scan-search"></i></div><i data-lucide="arrow-up-right" class="discipline-arrow"></i></article>
       </div>
     </section>
+    <section class="credentials section-shell section-pad" id="credentials">
+      <div class="section-topline reveal"><div class="section-kicker mono">04 / CREDENTIALS</div><span class="mono subtle">CERTIFICATIONS &amp; ACHIEVEMENTS</span></div>
+      <div class="section-title-row reveal"><h2>Certifications / Credentials<span class="muted"></span></h2><p>Proof of the skills I have learned, practiced, and earned along the way.</p></div>
+      <div class="filters reveal" id="credentialFilters" aria-label="Filter credentials"></div>
+      <div class="project-grid" id="credentialGrid"></div>
+      <a class="view-all-btn reveal" id="viewAllCredentials" href="credential.html"><span>View all credentials</span><i data-lucide="arrow-up-right"></i></a>
+      <div class="projects-foot reveal"><span class="mono">MORE CREDENTIALS ARE ALWAYS BEING EARNED</span><span class="tiny-cross">✳</span></div>
+    </section>
     <section class="contact section-shell section-pad" id="contact">
-      <div class="section-kicker mono reveal">04 / CONTACT</div>
+      <div class="section-kicker mono reveal">05 / CONTACT</div>
       <div class="contact-layout">
         <div class="contact-copy reveal"><p class="overline">Have an idea in mind?</p><h2>Let's make<br>something <span class="gradient-text">meaningful.</span></h2><p>Whether it's a collaboration, a project, or simply an interesting conversation, my inbox is open.</p><a class="email-link" href="mailto:hello@example.com">hello@example.com <i data-lucide="arrow-up-right"></i></a></div>
         <form class="contact-form reveal" id="contactForm">
@@ -134,10 +134,12 @@
     <article class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
       <button class="modal-close" data-close-modal aria-label="Close project"><i data-lucide="x"></i></button>
       <div class="modal-art" id="modalArt"></div>
-      <div class="modal-content"><div class="section-kicker mono" id="modalCategory"></div><h2 id="modalTitle"></h2><p id="modalDescription"></p><div class="tag-list" id="modalTags"></div><div class="modal-detail"><span class="mono">PROJECT NOTE</span><p id="modalDetails"></p></div><div class="modal-actions"><a class="text-link" id="modalLink" href="#" target="_blank" rel="noreferrer">Project Link<i data-lucide="arrow-up-right"></i></a><a class="view-all-btn modal-view-btn" id="modalViewBtn" href="#" target="_blank" rel="noreferrer"><span>View project</span><i data-lucide="arrow-up-right"></i></a></div></div>
+      <div class="modal-content"><div class="section-kicker mono" id="modalCategory"></div><h2 id="modalTitle"></h2><p id="modalDescription"></p><div class="tag-list" id="modalTags"></div><div class="modal-detail"><span class="mono" id="modalNoteLabel">PROJECT NOTE</span><p id="modalDetails"></p></div><div class="modal-actions"><a class="text-link" id="modalLink" href="#" target="_blank" rel="noreferrer"><span id="modalLinkText">Project Link</span><i data-lucide="arrow-up-right"></i></a><a class="view-all-btn modal-view-btn" id="modalViewBtn" href="#"><span id="modalViewText">View project</span><i data-lucide="arrow-up-right"></i></a></div></div>
     </article>
   </div>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="assets/js/projects-data.js"></script>
+  <script src="assets/js/credentials-data.js"></script>
   <script src="assets/js/script.js"></script>
   <script src="assets/js/animation.js"></script>
 </body>
