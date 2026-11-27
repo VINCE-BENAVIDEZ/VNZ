@@ -239,6 +239,127 @@
   margin-top: 26px;
 }
 
+
+/* ---------- search (small magnifier that expands into a field) ---------- */
+.search-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: -8px 0 27px;
+  min-height: 34px;
+}
+.search-label {
+  font-size: 9px;
+  color: #9ca9c5;
+  cursor: text;
+}
+.search-label::after {
+  content: ":";
+}
+.project-search {
+  display: inline-flex;
+  align-items: center;
+  height: 34px;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background: transparent;
+  overflow: hidden;
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+}
+.project-search:hover {
+  border-color: rgba(181, 195, 255, 0.3);
+}
+.project-search.open {
+  border-color: rgba(181, 195, 255, 0.34);
+  background: rgba(223, 229, 255, 0.04);
+}
+.project-search:focus-within {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(139, 156, 255, 0.14);
+}
+.search-icon,
+.search-clear {
+  flex: 0 0 auto;
+  width: 32px;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #8790a1;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.search-icon {
+  cursor: default;
+  pointer-events: none;
+  color: #dfe5ff;
+}
+.search-icon svg,
+.search-clear svg {
+  width: 14px;
+  height: 14px;
+  stroke-width: 1.9;
+}
+.search-input {
+  width: 0;
+  min-width: 0;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: var(--text);
+  font: 10px var(--mono);
+  letter-spacing: 0.06em;
+  opacity: 0;
+  transition: width 0.3s ease, opacity 0.2s, padding 0.3s ease;
+}
+.search-input::placeholder {
+  color: #6b7485;
+}
+.project-search.open .search-input {
+  width: min(260px, 56vw);
+  padding: 0 4px 0 2px;
+  opacity: 1;
+}
+.search-clear {
+  width: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: width 0.2s, opacity 0.2s, color 0.2s;
+}
+.project-search.open.has-text .search-clear {
+  width: 30px;
+  opacity: 1;
+  pointer-events: auto;
+}
+.search-clear:hover,
+.search-clear:focus-visible {
+  color: #dfe5ff;
+  outline: none;
+}
+.search-status {
+  font-size: 9px;
+  color: #7f8aa0;
+  overflow-wrap: anywhere;
+}
+.search-status:empty {
+  display: none;
+}
+
+@media (max-width: 680px) {
+  .search-row {
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .search-status {
+    font-size: 7px;
+  }
+}
+
 /* ---------- responsive ---------- */
 @media (max-width: 900px) {
   .project-entry {

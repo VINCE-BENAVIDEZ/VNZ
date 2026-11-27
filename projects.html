@@ -42,6 +42,15 @@
       <div class="page-count mono reveal"><span id="projectCount">00</span> PROJECTS <span class="eyebrow-line"></span> A WORK IN PROGRESS — 2026 </div>
       <div class="filters reveal" id="projectFilters" aria-label="Filter projects">
       </div>
+      <div class="search-row reveal">
+        <label class="search-label mono" for="searchInput">SEARCH</label>
+        <form class="project-search open" id="projectSearch" role="search" autocomplete="off">
+          <span class="search-icon" aria-hidden="true"><i data-lucide="search"></i></span>
+          <input class="search-input" id="searchInput" type="text" placeholder="Search title, tags, objective…" aria-label="Search projects">
+          <button class="search-clear" id="searchClear" type="button" aria-label="Clear search"><i data-lucide="x"></i></button>
+        </form>
+        <span class="search-status mono" id="searchStatus" aria-live="polite"></span>
+      </div>
     </section>
   
       <!-- Project entries are generated from assets/js/projects-data.js -->

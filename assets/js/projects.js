@@ -74,15 +74,49 @@ function renderEntry(project, index) {
     </article>`;
 }
 
-/* ---------- list + filters ---------- */
-function renderEntries(filter = "All") {
+/* ---------- list + filters + search ---------- */
+const searchForm = document.querySelector("#projectSearch");
+const searchInput = document.querySelector("#searchInput");
+const searchClear = document.querySelector("#searchClear");
+const searchStatus = document.querySelector("#searchStatus");
+
+let activeFilter = "All";
+let searchQuery = "";
+
+// Everything searchable in one project, taken straight from projects-data.js
+function searchText(project) {
+  return [
+    project.title, project.type, project.objective, project.date,
+    project.thanks, project.id,
+    ...(Array.isArray(project.description) ? project.description : [project.description]),
+    ...(project.tags || [])
+  ].join(" ").toLowerCase();
+}
+
+// Every word typed must appear somewhere in the project (order doesn't matter)
+function matchesQuery(project, query) {
+  const words = query.toLowerCase().split(/\s+/).filter(Boolean);
+  if (!words.length) return true;
+  const text = searchText(project);
+  return words.every(word => text.includes(word));
+}
+
+function renderEntries(filter = activeFilter) {
+  activeFilter = filter;
   const visible = PROJECT_ENTRIES
     .map((project, index) => ({ project, index }))
-    .filter(({ project }) => filter === "All" || project.type === filter);
+    .filter(({ project }) => (activeFilter === "All" || project.type === activeFilter) && matchesQuery(project, searchQuery));
 
+  const searching = searchQuery.trim().length > 0;
   listEl.innerHTML = visible.length
     ? visible.map(({ project, index }) => renderEntry(project, index)).join("")
-    : `<p class="project-empty mono">NOTHING HERE YET — NEW WORK IN THIS CATEGORY IS COMING SOON.</p>`;
+    : `<p class="project-empty mono">${searching
+        ? "NO PROJECTS MATCH YOUR SEARCH — TRY A DIFFERENT KEYWORD."
+        : "NOTHING HERE YET — NEW WORK IN THIS CATEGORY IS COMING SOON."}</p>`;
+
+  searchStatus.textContent = searching
+    ? `${String(visible.length).padStart(2, "0")} RESULT${visible.length === 1 ? "" : "S"} FOR “${searchQuery.trim().toUpperCase()}”`
+    : "";
 
   if (window.lucide) lucide.createIcons();
   observeReveals();
@@ -100,6 +134,26 @@ filtersEl.addEventListener("click", event => {
   if (!button) return;
   filtersEl.querySelectorAll(".filter-btn").forEach(item => item.classList.toggle("active", item === button));
   renderEntries(button.dataset.filter);
+});
+
+/* ---------- search box (always open) ---------- */
+searchInput.addEventListener("input", () => {
+  searchQuery = searchInput.value;
+  searchForm.classList.toggle("has-text", searchQuery.length > 0);
+  renderEntries();
+});
+
+function clearSearch() {
+  searchInput.value = "";
+  searchQuery = "";
+  searchForm.classList.remove("has-text");
+  renderEntries();
+}
+
+searchClear.addEventListener("click", () => { clearSearch(); searchInput.focus(); });
+searchForm.addEventListener("submit", event => event.preventDefault());
+searchInput.addEventListener("keydown", event => {
+  if (event.key === "Escape") clearSearch();
 });
 
 /* ---------- play video / youtube / google drive inside the media box ---------- */
