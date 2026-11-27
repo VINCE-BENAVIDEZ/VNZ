@@ -143,12 +143,12 @@ const PROJECT_ENTRIES = [
       "The primary goal is to explore Android's background processing capabilities, application lifecycle management, data access permissions, and system-level security mechanisms, particularly in relation to sensitive information and device privacy."
     ],
     tags: ["Android Security", "Malware Development", "Malware Analysis", "Reverse Engineering", "Ethical Hacking", "Cybersecurity", "Android Development", "APK Development"],
-    link: "https://drive.google.com/file/d/1SO3SQmXq_fGVg9PYf6NRebRUXnQXWulR/view?usp=sharing",
+    link: "https://drive.google.com/file/d/1SO3SQmXq_fGVg9PYf6NRebRUXnQXWulR/view",
     glyph: "",
     art: "🔒",
     media: {
     type: "video",
-    src: "https://drive.google.com/file/d/1SO3SQmXq_fGVg9PYf6NRebRUXnQXWulR/preview?1&amp;vq=hd1080",
+    src: "https://drive.google.com/file/d/1SO3SQmXq_fGVg9PYf6NRebRUXnQXWulR/view",
     poster: ""
     },
     date: "August 15, 2024",
@@ -175,7 +175,7 @@ const PROJECT_ENTRIES = [
     art: "art-electronics",
     media: {
     type: "video",
-    src: "https://drive.google.com/file/d/1jI4LU4sidd-GtklTm5RvtTNw8bXm9aT8/preview?1&amp;vq=hd1080",
+    src: "https://drive.google.com/file/d/1jI4LU4sidd-GtklTm5RvtTNw8bXm9aT8/view",
     poster: ""
     },
     date: "May 21, 2024",
@@ -203,7 +203,7 @@ const PROJECT_ENTRIES = [
     art: "art-digital",
     media: {
     type: "video",
-    src: "https://drive.google.com/file/d/1MDcRofmrM2Lk4XFz7Jm9PcjyE-5bpHch/preview",
+    src: "https://drive.google.com/file/d/1MDcRofmrM2Lk4XFz7Jm9PcjyE-5bpHch/view",
     poster: ""
     },
     date: "March 27, 2024",
@@ -231,7 +231,7 @@ const PROJECT_ENTRIES = [
     art: "art-web",
     media: {
     type: "video",
-    src: "https://drive.google.com/file/d/1cyPzyO-dkIBg-8LVGVT8q8GR2mbenxEK/preview?1&amp;vq=hd1080",
+    src: "https://drive.google.com/file/d/1cyPzyO-dkIBg-8LVGVT8q8GR2mbenxEK/view",
     poster: ""
     },
     date: "January 15, 2024",
@@ -258,7 +258,7 @@ const PROJECT_ENTRIES = [
     art: "🔒",
     media: {
     type: "video",
-    src: "https://drive.google.com/file/d/18QuzYmuyHey_AuijqQ-GX-E-Yk3uDmSo/preview?vq=hd1080",
+    src: "https://drive.google.com/file/d/18QuzYmuyHey_AuijqQ-GX-E-Yk3uDmSo/view",
     poster: ""
     },
     date: "November 3, 2023",
