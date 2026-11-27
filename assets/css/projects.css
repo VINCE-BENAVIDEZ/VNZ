@@ -384,6 +384,14 @@
   .entry-media {
     border-radius: 16px;
   }
+  /* Videos: use the full phone width and a 16:9 frame so the player has room for its controls */
+  .entry-media.has-media:has(.media-player) {
+    aspect-ratio: 16 / 9;
+    width: calc(100% + 40px);
+    margin-inline: -20px;
+    border-radius: 0;
+    border-inline: 0;
+  }
   .play-btn {
     width: 50px;
     height: 50px;
