@@ -1243,7 +1243,7 @@ h1 {
     margin-top: 25px;
   }
   .hero-copy {
-    font-size: 13px;
+    font-size: 12px;
     max-width: 420px;
   }
   .hero-actions {
@@ -1268,7 +1268,13 @@ h1 {
   }
   .section-heading h2,
   .section-title-row h2 {
-    font-size: 39px;
+    font-size: 30px;
+  }
+  .large-copy {
+    font-size: 16px;
+  }
+  .email-link {
+    font-size: 12px;
   }
   .intro-copy {
     padding: 0;
@@ -1316,8 +1322,25 @@ h1 {
   .project-grid {
     grid-template-columns: 1fr;
   }
+  .project-grid {
+    gap: 12px;
+  }
   .project-art {
-    height: 220px;
+    height: 120px;
+  }
+  .project-art .art-glyph {
+    font-size: 44px;
+  }
+  .project-card-body {
+    padding: 14px 14px 13px;
+  }
+  .project-card h3 {
+    font-size: 15px;
+  }
+  .project-card p {
+    font-size: 10px;
+    min-height: 0;
+    margin-bottom: 12px;
   }
   .discipline-list {
     margin-top: 35px;
@@ -1328,7 +1351,7 @@ h1 {
     padding: 23px 0;
   }
   .discipline-main h3 {
-    font-size: 18px;
+    font-size: 16px;
   }
   .discipline-main p {
     font-size: 10px;
@@ -1371,7 +1394,7 @@ h1 {
     margin-top: 35px;
   }
   .contact-copy h2 {
-    font-size: 50px;
+    font-size: 36px;
   }
   .site-footer {
     min-height: 130px;
@@ -1401,12 +1424,13 @@ h1 {
     padding: 28px 23px;
   }
   .modal-content h2 {
-    font-size: 26px;
+    font-size: 22px;
   }
   .modal-close {
     position: sticky;
-    float: right;
-    margin-bottom: -34px;
+    top: 13px;
+    justify-self: end;
+    margin: 13px 13px -47px 0;
   }
   .project-modal {
     padding: 12px;

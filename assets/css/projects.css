@@ -376,7 +376,7 @@
     padding-top: 120px;
   }
   .page-title {
-    font-size: clamp(36px, 11vw, 50px);
+    font-size: clamp(26px, 8vw, 34px);
   }
   .page-count {
     font-size: 7px;
@@ -398,10 +398,13 @@
     gap: 12px;
   }
   .meta-title dd {
-    font-size: 18px;
+    font-size: 16px;
+  }
+  .meta-row dd {
+    font-size: 12px;
   }
   .entry-desc p {
-    font-size: 13px;
+    font-size: 12px;
   }
   .projects-end {
     padding-bottom: 60px;
