@@ -1,0 +1,371 @@
+/* =========================================================
+   VINCE BENAVIDEZ — PORTFOLIO
+   Edit the PROJECTS array and CONFIG values below to customize.
+   The contact form uses mailto: and does not require a backend.
+   ========================================================= */
+  const startDate = new Date("2022-07-28T00:00:00+08:00");
+
+  function updateCounter() {
+    const now = new Date();
+    let diff = Math.floor((now - startDate) / 1000);
+
+    const days = Math.floor(diff / 86400);
+    const hrs = Math.floor((diff % 86400) / 3600);
+    const min = Math.floor((diff % 3600) / 60);
+    const sec = diff % 60;
+
+    document.getElementById("elapsed").textContent =
+      `${days} Days, ${hrs} Hrs, ${min} Min, ${sec} Sec`;
+  }
+  updateCounter();
+  setInterval(updateCounter, 1000);
+const CONFIG = {
+  name: "Vince Benavidez",
+  email: "hello@example.com", // Replace with your real email.
+  github: "https://github.com/", // Replace with your profile.
+  linkedin: "https://www.linkedin.com/", // Replace with your profile.
+  allProjectsUrl: "projects.html" // Page opened by the "View all projects" button. Use "" to just reset the filter instead; a full https:// link opens in a new tab.
+};
+
+// Projects come from assets/js/projects-data.js (PROJECT_ENTRIES) so the home page
+// and projects.html always show the same data. Edit projects THERE, not here.
+const PROJECT_PREVIEW_COUNT = 6; // random projects shown on the home page (reshuffled on every page load)
+function shuffled(list) {
+  const copy = [...list];
+  for (let i = copy.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+  return copy;
+}
+const TYPE_ART = {
+  "web development": "art-web", "security research": "art-research", "computer research": "art-research",
+  "artificial intelligence": "art-ai", "app development": "art-art", "hardware development": "art-code",
+  "art": "art-art", "cardistry": "art-cards", "programming": "art-code"
+};
+const PROJECTS = (typeof PROJECT_ENTRIES !== "undefined" ? PROJECT_ENTRIES : []).map((entry, index) => {
+  const paragraphs = Array.isArray(entry.description) ? entry.description : [entry.description];
+  const hasLink = entry.link && entry.link.trim() && entry.link.trim() !== "#";
+  return {
+    id: entry.id,
+    number: String(index + 1).padStart(2, "0"),
+    title: entry.title,
+    category: entry.type,
+    description: paragraphs.filter(Boolean)[0] || "",
+    tags: entry.tags || [],
+    glyph: entry.glyph || "✳",
+    art: entry.art || TYPE_ART[String(entry.type).toLowerCase()] || "art-web",
+    details: entry.objective || "",                    // shown as PROJECT NOTE
+    link: hasLink ? entry.link : "",                   // "Project Link" -> the real project
+    pageUrl: `projects.html#${encodeURIComponent(entry.id)}` // "View project" -> projects.html#id
+  };
+});
+
+// Credentials come from assets/js/credentials-data.js (CREDENTIAL_ENTRIES).
+const CREDENTIAL_PREVIEW_COUNT = 3; // random credentials shown on the home page (reshuffled on every page load)
+const CREDENTIALS = (typeof CREDENTIAL_ENTRIES !== "undefined" ? CREDENTIAL_ENTRIES : []).map((entry, index) => {
+  const paragraphs = Array.isArray(entry.description) ? entry.description : [entry.description];
+  const hasLink = entry.link && entry.link.trim() && entry.link.trim() !== "#";
+  return {
+    id: entry.id,
+    number: String(index + 1).padStart(2, "0"),
+    title: entry.title,
+    category: entry.type,
+    description: paragraphs.filter(Boolean)[0] || "",
+    tags: entry.tags || [],
+    glyph: entry.glyph || "🎓",
+    art: entry.art || "art-ai",
+    details: [entry.issuer && `Issued by ${entry.issuer}`, entry.date, entry.credentialId && `ID: ${entry.credentialId}`].filter(Boolean).join(" · "),
+    link: hasLink ? entry.link : "",
+    pageUrl: `credential.html#${encodeURIComponent(entry.id)}`
+  };
+});
+
+const PROJECTS_RANDOM = shuffled(PROJECTS);
+
+function shorten(text, max = 130) {
+  const clean = String(text).replace(/\s+/g, " ").trim();
+  return clean.length > max ? clean.slice(0, max).replace(/\s+\S*$/, "") + "…" : clean;
+}
+
+const projectGrid = document.querySelector("#projectGrid");
+const filters = document.querySelector("#projectFilters");
+const modal = document.querySelector("#projectModal");
+const toast = document.querySelector("#toast");
+
+function matchesFilter(project, filter) {
+  return filter === "All" || project.category === filter;
+}
+
+function renderFilters() {
+  const types = [...new Set(PROJECTS.map(project => project.category).filter(Boolean))];
+  filters.innerHTML =
+    `<button class="filter-btn active" data-filter="All">All <span>${String(PROJECTS.length).padStart(2, "0")}</span></button>` +
+    types.map(type => `<button class="filter-btn" data-filter="${escapeHTML(type)}">${escapeHTML(type)}</button>`).join("");
+}
+
+function renderProjects(filter = "All") {
+  const visible = PROJECTS_RANDOM.filter(project => matchesFilter(project, filter)).slice(0, PROJECT_PREVIEW_COUNT);
+  if (!visible.length) {
+    projectGrid.innerHTML = `<p class="project-empty mono">NOTHING HERE YET — NEW WORK IN THIS CATEGORY IS COMING SOON.</p>`;
+    return;
+  }
+  projectGrid.innerHTML = visible.map(project => `
+    <article class="project-card" tabindex="0" role="button" aria-label="View ${escapeHTML(project.title)} project" data-project="${escapeHTML(project.id)}">
+      <div class="project-art ${escapeHTML(project.art)}">
+        <span class="art-index">PROJECT / ${project.number}</span>
+        <span class="art-glyph">${escapeHTML(project.glyph)}</span>
+      </div>
+      <div class="project-card-body">
+        <div class="project-card-top"><span class="project-category">${escapeHTML(project.category)}</span><i data-lucide="arrow-up-right"></i></div>
+        <h3>${escapeHTML(project.title)}</h3>
+        <p>${escapeHTML(shorten(project.description))}</p>
+        <div class="project-tags">${project.tags.slice(0, 3).map(tag => `<span>${escapeHTML(tag)}</span>`).join("")}</div>
+      </div>
+    </article>`).join("");
+  if (window.lucide) lucide.createIcons();
+}
+
+const CREDENTIALS_RANDOM = shuffled(CREDENTIALS);
+const credentialGrid = document.querySelector("#credentialGrid");
+const credentialFilters = document.querySelector("#credentialFilters");
+
+function renderCredentialFilters() {
+  const types = [...new Set(CREDENTIALS.map(item => item.category).filter(Boolean))];
+  credentialFilters.innerHTML =
+    `<button class="filter-btn active" data-filter="All">All <span>${String(CREDENTIALS.length).padStart(2, "0")}</span></button>` +
+    types.map(type => `<button class="filter-btn" data-filter="${escapeHTML(type)}">${escapeHTML(type)}</button>`).join("");
+}
+
+function renderCredentials(filter = "All") {
+  const visible = CREDENTIALS_RANDOM.filter(item => matchesFilter(item, filter)).slice(0, CREDENTIAL_PREVIEW_COUNT);
+  if (!visible.length) {
+    credentialGrid.innerHTML = `<p class="project-empty mono">NOTHING HERE YET — NEW CREDENTIALS ARE COMING SOON.</p>`;
+    return;
+  }
+  credentialGrid.innerHTML = visible.map(item => `
+    <article class="project-card" tabindex="0" role="button" aria-label="View ${escapeHTML(item.title)} credential" data-credential="${escapeHTML(item.id)}">
+      <div class="project-art ${escapeHTML(item.art)}">
+        <span class="art-index">CREDENTIAL / ${item.number}</span>
+        <span class="art-glyph">${escapeHTML(item.glyph)}</span>
+      </div>
+      <div class="project-card-body">
+        <div class="project-card-top"><span class="project-category">${escapeHTML(item.category)}</span><i data-lucide="arrow-up-right"></i></div>
+        <h3>${escapeHTML(item.title)}</h3>
+        <p>${escapeHTML(shorten(item.description))}</p>
+        <div class="project-tags">${item.tags.slice(0, 3).map(tag => `<span>${escapeHTML(tag)}</span>`).join("")}</div>
+      </div>
+    </article>`).join("");
+  if (window.lucide) lucide.createIcons();
+}
+
+function escapeHTML(value) {
+  return String(value).replace(/[&<>"']/g, char => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;"
+  })[char]);
+}
+
+let lastFocused = null;
+
+function openProject(id, kind = "project") {
+  const isCredential = kind === "credential";
+  const project = (isCredential ? CREDENTIALS : PROJECTS).find(item => item.id === id);
+  if (!project) return;
+  document.querySelector("#modalNoteLabel").textContent = isCredential ? "CREDENTIAL NOTE" : "PROJECT NOTE";
+  document.querySelector("#modalLinkText").textContent = isCredential ? "Verify credential" : "Project Link";
+  document.querySelector("#modalViewText").textContent = isCredential ? "View credential" : "View project";
+  lastFocused = document.activeElement;
+  document.querySelector("#modalArt").className = `modal-art ${project.art}`;
+  document.querySelector("#modalArt").innerHTML = `<span>${escapeHTML(project.glyph)}</span>`;
+  document.querySelector("#modalCategory").textContent = `${isCredential ? "CREDENTIAL" : "PROJECT"} / ${project.category.toUpperCase()}`;
+  document.querySelector("#modalTitle").textContent = project.title;
+  document.querySelector("#modalDescription").textContent = project.description;
+  document.querySelector("#modalDetails").textContent = project.details;
+  document.querySelector("#modalTags").innerHTML = project.tags.map(tag => `<span>${escapeHTML(tag)}</span>`).join("");
+  // Project Link -> the real project (hidden when the project has no link yet)
+  const link = document.querySelector("#modalLink");
+  link.style.display = project.link ? "" : "none";
+  if (project.link) link.href = project.link;
+  // View project -> its entry on projects.html
+  document.querySelector("#modalViewBtn").href = project.pageUrl;
+  modal.classList.add("open");
+  modal.setAttribute("aria-hidden", "false");
+  document.body.classList.add("modal-open");
+  document.querySelector(".modal-close").focus();
+}
+
+function closeProject() {
+  modal.classList.remove("open");
+  modal.setAttribute("aria-hidden", "true");
+  document.body.classList.remove("modal-open");
+  if (lastFocused && typeof lastFocused.focus === "function") lastFocused.focus({ preventScroll: true });
+  lastFocused = null;
+}
+
+renderFilters();
+renderCredentialFilters();
+credentialFilters.addEventListener("click", event => {
+  const button = event.target.closest("[data-filter]");
+  if (!button) return;
+  credentialFilters.querySelectorAll(".filter-btn").forEach(item => item.classList.toggle("active", item === button));
+  renderCredentials(button.dataset.filter);
+});
+credentialGrid.addEventListener("click", event => {
+  const card = event.target.closest("[data-credential]");
+  if (card) openProject(card.dataset.credential, "credential");
+});
+credentialGrid.addEventListener("keydown", event => {
+  if ((event.key === "Enter" || event.key === " ") && event.target.matches("[data-credential]")) {
+    event.preventDefault();
+    openProject(event.target.dataset.credential, "credential");
+  }
+});
+filters.addEventListener("click", event => {
+  const button = event.target.closest("[data-filter]");
+  if (!button) return;
+  filters.querySelectorAll(".filter-btn").forEach(item => item.classList.toggle("active", item === button));
+  renderProjects(button.dataset.filter);
+});
+
+document.querySelector("#viewAllProjects").addEventListener("click", () => {
+  if (CONFIG.allProjectsUrl) {
+    if (/^https?:/i.test(CONFIG.allProjectsUrl)) window.open(CONFIG.allProjectsUrl, "_blank", "noopener");
+    else window.location.href = CONFIG.allProjectsUrl;
+    return;
+  }
+  const allButton = filters.querySelector('[data-filter="All"]');
+  filters.querySelectorAll(".filter-btn").forEach(item => item.classList.toggle("active", item === allButton));
+  renderProjects("All");
+  filters.scrollIntoView({ behavior: "smooth", block: "start" });
+  showToast(`Showing all ${PROJECTS.length} projects.`);
+});
+
+projectGrid.addEventListener("click", event => {
+  const card = event.target.closest("[data-project]");
+  if (card) openProject(card.dataset.project);
+});
+projectGrid.addEventListener("keydown", event => {
+  if ((event.key === "Enter" || event.key === " ") && event.target.matches("[data-project]")) {
+    event.preventDefault();
+    openProject(event.target.dataset.project);
+  }
+});
+modal.addEventListener("click", event => {
+  // closest() so clicking the X icon (the <svg> inside the button) also closes the modal
+  if (event.target.closest("[data-close-modal]")) closeProject();
+});
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape" && modal.classList.contains("open")) closeProject();
+});
+
+const menuToggle = document.querySelector("#menuToggle");
+const mainNav = document.querySelector("#mainNav");
+menuToggle.addEventListener("click", () => {
+  const isOpen = mainNav.classList.toggle("open");
+  menuToggle.setAttribute("aria-expanded", String(isOpen));
+  menuToggle.setAttribute("aria-label", isOpen ? "Close navigation" : "Open navigation");
+  menuToggle.innerHTML = isOpen ? '<i data-lucide="x"></i>' : '<i data-lucide="menu"></i>';
+  if (window.lucide) lucide.createIcons();
+});
+mainNav.querySelectorAll("a").forEach(link => link.addEventListener("click", () => {
+  mainNav.classList.remove("open");
+  menuToggle.setAttribute("aria-expanded", "false");
+  menuToggle.innerHTML = '<i data-lucide="menu"></i>';
+  if (window.lucide) lucide.createIcons();
+}));
+
+// Update active navigation based on the visible section.
+const sections = document.querySelectorAll("main section[id]");
+const navLinks = document.querySelectorAll(".nav-link");
+const sectionObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navLinks.forEach(link => link.classList.toggle("active", link.getAttribute("href") === `#${entry.target.id}`));
+    }
+  });
+}, { rootMargin: "-35% 0px -55% 0px" });
+sections.forEach(section => sectionObserver.observe(section));
+
+// Reveal sections as they enter the viewport.
+const revealObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("visible");
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll(".reveal").forEach(element => revealObserver.observe(element));
+
+// Header treatment on scroll.
+window.addEventListener("scroll", () => {
+  document.querySelector(".site-header").classList.toggle("scrolled", window.scrollY > 25);
+}, { passive: true });
+
+// Contact form: compose an email locally. Replace CONFIG.email above.
+document.querySelector("#contactForm").addEventListener("submit", event => {
+  event.preventDefault();
+  const form = new FormData(event.currentTarget);
+  const name = form.get("name").trim();
+  const email = form.get("email").trim();
+  const message = form.get("message").trim();
+  const subject = encodeURIComponent(`Portfolio inquiry from ${name}`);
+  const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`);
+  window.location.href = `mailto:${CONFIG.email}?subject=${subject}&body=${body}`;
+  showToast("Your email application is opening.");
+});
+
+function showToast(message) {
+  toast.textContent = message;
+  toast.classList.add("show");
+  window.setTimeout(() => toast.classList.remove("show"), 3000);
+}
+
+// Lightweight ambient particle network for the hero.
+(function initParticles() {
+  const canvas = document.querySelector("#particleCanvas");
+  const ctx = canvas.getContext("2d");
+  let width = 0, height = 0, particles = [];
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function resize() {
+    const rect = canvas.getBoundingClientRect();
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    width = rect.width; height = rect.height;
+    canvas.width = Math.floor(width * dpr);
+    canvas.height = Math.floor(height * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const count = Math.min(65, Math.floor(width / 17));
+    particles = Array.from({ length: count }, () => ({
+      x: Math.random() * width, y: Math.random() * height,
+      vx: (Math.random() - .5) * .22, vy: (Math.random() - .5) * .22,
+      r: Math.random() * 1.3 + .4
+    }));
+  }
+  function draw() {
+    ctx.clearRect(0, 0, width, height);
+    particles.forEach((p, i) => {
+      if (!reducedMotion) { p.x += p.vx; p.y += p.vy; }
+      if (p.x < 0 || p.x > width) p.vx *= -1;
+      if (p.y < 0 || p.y > height) p.vy *= -1;
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = "rgba(166,184,255,.58)"; ctx.fill();
+      for (let j = i + 1; j < particles.length; j++) {
+        const q = particles[j], dx = p.x - q.x, dy = p.y - q.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        if (distance < 125) {
+          ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y);
+          ctx.strokeStyle = `rgba(132,157,231,${(1 - distance / 125) * .13})`;
+          ctx.lineWidth = .7; ctx.stroke();
+        }
+      }
+    });
+    if (!reducedMotion) requestAnimationFrame(draw);
+  }
+  resize(); draw();
+  window.addEventListener("resize", resize);
+})();
+
+document.querySelector("#year").textContent = new Date().getFullYear();
+renderProjects();
+renderCredentials();
+if (window.lucide) lucide.createIcons();
