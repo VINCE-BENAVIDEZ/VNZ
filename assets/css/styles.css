@@ -1204,13 +1204,29 @@ h1 {
     width: 100%;
     padding-bottom: 0;
   }
+  /* V.R.U.A + Sapsappy: shrunk and sitting beside the photo, to the right of the head (not on the photo).
+     To nudge it, change --art-x (higher = more right) and --art-y (higher = lower). --art-scale sets the size. */
   .hero-art {
-    width: 100%;
-    height: 380px;
-    top: auto;
-    bottom: 35px;
-    right: -30%;
-    opacity: 0.38;
+    --art-x: 112px;
+    --art-y: 269px;
+    --art-w: 380px;
+    --art-h: 300px;
+    --art-scale: 0.2;
+    width: var(--art-w);
+    height: var(--art-h);
+    top: var(--art-y);
+    left: calc(50% + var(--art-x));
+    right: auto;
+    bottom: auto;
+    margin: calc(var(--art-h) / -2) 0 0 calc(var(--art-w) / -2);
+    transform: scale(var(--art-scale));
+    transform-origin: center;
+    opacity: 0.95;
+    z-index: 3;
+    pointer-events: none;
+  }
+  .art-label {
+    display: none;
   }
   .hero-grid {
     background-size: 45px 45px;
