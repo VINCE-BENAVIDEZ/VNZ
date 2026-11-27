@@ -226,6 +226,13 @@ function observeReveals() {
   document.querySelectorAll(".reveal:not(.visible)").forEach(element => revealObserver.observe(element));
 }
 
+/* ---------- back-to-top button ---------- */
+const backToTop = document.querySelector("#backToTop");
+window.addEventListener("scroll", () => {
+  backToTop.classList.toggle("show", window.scrollY > 400);
+}, { passive: true });
+backToTop.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+
 /* ---------- start ---------- */
 document.querySelector("#year").textContent = new Date().getFullYear();
 countEl.textContent = String(PROJECT_ENTRIES.length).padStart(2, "0");

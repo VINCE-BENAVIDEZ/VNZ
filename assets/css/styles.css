@@ -1195,9 +1195,9 @@ h1 {
   }
   .hero {
     height: auto;
-    min-height: 780px;
+    min-height: 0;
     padding-top: 130px;
-    padding-bottom: 90px;
+    padding-bottom: 0;
     align-items: flex-start;
   }
   .hero-content {
@@ -1266,12 +1266,36 @@ h1 {
     grid-template-columns: 1fr;
     gap: 30px;
   }
+  #about.section-pad {
+    padding-top: 28px;
+  }
+  #about .intro-layout {
+    margin-top: 18px;
+    gap: 20px;
+  }
+  #about .overline {
+    margin-bottom: 12px;
+  }
   .section-heading h2,
   .section-title-row h2 {
     font-size: 30px;
   }
+  #about .section-heading h2 {
+    font-size: 26px;
+  }
+  #about .intro-copy h2 {
+    font-size: 15px;
+  }
   .large-copy {
-    font-size: 16px;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  #about .text-link {
+    font-size: 10px;
+  }
+  #about .quote-row p {
+    font-size: 11px;
+    line-height: 1.6;
   }
   .email-link {
     font-size: 12px;
@@ -1323,24 +1347,77 @@ h1 {
     grid-template-columns: 1fr;
   }
   .project-grid {
-    gap: 12px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 7px;
+  }
+  .project-card:hover {
+    transform: none;
+  }
+  .project-card {
+    display: flex;
+    flex-direction: column;
+    height: 230px;
   }
   .project-art {
-    height: 120px;
+    height: auto;
+    flex: 0 0 50%;
+  }
+  .project-art .art-index {
+    top: 6px;
+    left: 7px;
+    font-size: 5px;
   }
   .project-art .art-glyph {
-    font-size: 44px;
+    font-size: 28px;
   }
   .project-card-body {
-    padding: 14px 14px 13px;
+    flex: 1 1 50%;
+    min-height: 0;
+    overflow: hidden;
+    padding: 8px 7px 8px;
+  }
+  .project-card-top {
+    margin-bottom: 5px;
+  }
+  .project-category {
+    font-size: 5px;
+    letter-spacing: 0.06em;
+    line-height: 1.4;
+  }
+  .project-card-top svg {
+    width: 8px;
+    flex: none;
+    margin-left: 3px;
   }
   .project-card h3 {
-    font-size: 15px;
+    font-size: 10px;
+    line-height: 1.25;
+    margin-bottom: 4px;
+    overflow-wrap: anywhere;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
   .project-card p {
-    font-size: 10px;
+    font-size: 7.5px;
+    line-height: 1.55;
     min-height: 0;
-    margin-bottom: 12px;
+    margin-bottom: 7px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .project-tags {
+    gap: 3px;
+  }
+  .project-tags span {
+    font-size: 5px;
+    padding: 2px 3px;
+  }
+  .project-tags span:nth-child(n + 3) {
+    display: none;
   }
   .discipline-list {
     margin-top: 35px;
